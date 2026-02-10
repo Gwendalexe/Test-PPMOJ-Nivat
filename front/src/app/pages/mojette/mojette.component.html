@@ -1,0 +1,219 @@
+<app-navbar></app-navbar>
+
+<div
+  [style.display]="hasBeenSolved ? 'flex' : 'none'"
+  class="container-fluid flex-column flex-grow-1 dialog-container no-scrollbar">
+  <div id="endDialog" class="card primary-card">
+    <h2 *ngIf="gridId && reward" class="text-center">Félicitations !</h2>
+    <div *ngIf="gridId && reward" class="d-flex flex-column">
+      <span
+        >Vous avez résolu la grille N°{{ gridId }} en
+        {{ timeToString(timeElapsed) }} !</span
+      >
+      <span
+        >Vous avez remporté <b>{{ reward }}</b> mojettes !</span
+      >
+    </div>
+    <div class="selector-container">
+      <div class="grid-selector-header d-flex flex-row justify-content-between">
+        <h3 class="d-block">Grilles précédentes</h3>
+        <mat-form-field>
+          <mat-select
+            class="outline-select btn-sm"
+            [(ngModel)]="selectedLevel"
+            name="level"
+            id="level-select"
+            (selectionChange)="onSelectChange()"
+            panelClass="selectPanel">
+            <mat-option value="1">Facile</mat-option>
+            <mat-option value="2">Moyen</mat-option>
+            <mat-option value="3">Difficile</mat-option>
+            <mat-option value="4">Grille du jour</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div
+        *ngIf="selectedLevel !== '4'"
+        id="scroll-container"
+        class="d-flex flex-row calendar-scroll-container">
+        <div class="calendar-container left d-grid justify-content-between">
+          <button
+            *ngFor="let value of currentNbGrid; let index = index"
+            [value]="index"
+            id="btn_calendar_{{ index }}"
+            class="btn btn-default btn-sm square btn-calendar"
+            [class.withTick]="value.solved"
+            (click)="playGrid(index)">
+            {{ index + 1 }}
+          </button>
+        </div>
+        <div class="calendar-container right d-grid justify-content-between">
+          <button
+            *ngFor="let value of nextNbGrid; let index = index"
+            [value]="index"
+            id="btn_calendar_right_{{ index }}"
+            class="btn btn-default btn-sm square btn-calendar"
+            [class.withTick]="value.solved"
+            disabled>
+            {{ index + 1 }}
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="selectedLevel === '4'"
+        id="daily-scroll-container"
+        class="calendar-scroll-container daily-view">
+        <div class="daily-agenda">
+          <div class="daily-agenda__header">
+            <div class="daily-agenda__week-label"></div>
+            <div
+              *ngFor="let label of weekDayLabels"
+              class="daily-agenda__day-label">
+              {{ label }}
+            </div>
+          </div>
+          <div class="daily-agenda__body">
+            <div
+              *ngFor="let week of dailyCalendarWeeks"
+              class="daily-agenda__row">
+              <div class="daily-agenda__week-number">
+                {{ week.weekNumber }}
+              </div>
+              <div
+                *ngFor="let day of week.days"
+                class="daily-agenda__cell"
+                [ngClass]="{
+                  'outside-month': !day.isCurrentMonth,
+                  today: day.isToday
+                }">
+                <button
+                  *ngIf="day.dayNumber !== null"
+                  [value]="day.dayNumber"
+                  id="btn_daily_{{ day.dayNumber }}"
+                  class="btn btn-default btn-sm square btn-calendar"
+                  (click)="playDailyGrid(day.dayNumber!)"
+                  [disabled]="day.dayNumber! > todayDayNumber"
+                  [class.withTick]="day.dayNumber !== null && dailyGridCompletionStatus[day.dayNumber]">
+                  {{ day.dayNumber }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex flex-row justify-content-end">
+      <span>
+        Cliquez sur une grille complétée pour voir le classement
+      </span>
+      <button (click)="goToHomePage()" class="btn btn-secondary btn-sm">
+        Retour à l'accueil
+      </button>
+    </div>
+  </div>
+</div>
+
+<div [style.display]="isHelpOpen ? 'block' : 'none'" id="modal-backdrop"></div>
+<dialog
+  id="helpDialog"
+  class="d-flex modal card primary-modal"
+  [ngClass]="[isHelpOpen ? 'open' : '']">
+  <h2 class="text-center">Aide</h2>
+  <button
+    (click)="goToTutorial()"
+    class="btn btn-primary btn-sm btn-tuto">
+    <div class="tuto">Tutoriel</div>
+  </button>
+  <span class="justify-content-end swipe-info align-center"
+    >Swipe up pour fermer <i class="bi bi-arrow-up-short"></i
+  ></span>
+</dialog>
+
+
+<div
+  [style.display]="hasBeenSolved ? 'none' : 'flex'"
+  class="game-container container-fluid flex-row align-items-start flex-grow-1"
+  [ngClass]="showFinishedGrid ? 'justify-content-start' : 'justify-content-center'">
+  <div class="d-flex flex-column align-items-center me-4" style="width: 50%;"
+  [ngStyle]="showFinishedGrid ? {'pointer-events': 'none'} : {}">
+    <div id="mojette-matrix-container" class="container card primary-card">
+      <button class="btn btn-help" id="toggle-help-btn">?</button>
+      <div
+        class="mojette-matrix-header container d-flex flex-row justify-content-between align-items-stretch">
+        <div class="timer-container container d-flex">
+          <button
+            (click)="toggleTimer()"
+            id="timer-btn"
+            class="btn btn-timer btn-primary btn-sm">
+            Start
+          </button>
+          <span id="timer-span" class="timer">00:00</span>
+        </div>
+        <div class="info-container container d-flex">
+          <span id="grid-info-span"></span>
+        </div>
+      </div>
+
+      <div id="mojette-matrix" #matriceContainer>
+        <div id="split-container"></div>
+        <div id="bin-container">
+          <div class="bin-div-container" id="left-bin-container"></div>
+          <div class="bin-div-container" id="right-bin-container"></div>
+          <div class="bin-div-container" id="down-bin-container"></div>
+        </div>
+        <form id="mojette-form"></form>
+      </div>
+    </div>
+
+    <div
+      class="button-container card primary-card mx-auto d-flex flex-row align-items-center">
+      <div class="button-keyboard-container">
+        <button id="btn_kb_0" class="btn btn-default btn-md square btn-kb">0</button>
+        <button id="btn_kb_1" class="btn btn-default btn-md square btn-kb">1</button>
+        <button id="btn_kb_2" class="btn btn-default btn-md square btn-kb">2</button>
+        <button id="btn_kb_3" class="btn btn-default btn-md square btn-kb">3</button>
+        <button id="btn_kb_4" class="btn btn-default btn-md square btn-kb">4</button>
+        <button id="btn_kb_5" class="btn btn-default btn-md square btn-kb">5</button>
+        <button id="btn_kb_6" class="btn btn-default btn-md square btn-kb">6</button>
+        <button id="btn_kb_7" class="btn btn-default btn-md square btn-kb">7</button>
+        <button id="btn_kb_8" class="btn btn-default btn-md square btn-kb">8</button>
+        <button id="btn_kb_9" class="btn btn-default btn-md square btn-kb">9</button>
+      </div>
+      <div class="button-secondary-actions-container d-flex flex-column">
+        <button
+          id="btn_hint"
+          title="Indice ({{ helpCost }} mojettes)"
+          class="btn btn-default square btn-kb btn-md"
+          [ngClass]="[helpsUsed >= 1 ? 'disabled' : '']"
+          [disabled]="selectedLevel === '4' || helpCost > currentUser['mojettes']!">
+          <i id="stars" class="bi bi-stars"></i>
+          <i id="brush" class="bi bi-brush-fill"></i>
+        </button>
+        <button
+          id="btn_kb_back"
+          title="Retour"
+          class="btn btn-default btn-md square btn-kb disabled">
+          <i class="bi bi-arrow-return-left"></i>
+        </button>
+      </div>
+    </div>
+    <a
+      class="secondary-link button-link"
+      (click)="goToGridBrowse()"
+      (keypress)="goToGridBrowse()"
+      tabindex="0"
+      >En difficulté? Jouez une autre grille</a
+    >
+  </div>
+  <div *ngIf="showFinishedGrid" class="container-fluid d-flex flex-column flex-grow-1 dialog-container no-scrollbar" style="width: 50%;">
+    <app-leaderboard-table [gridId]="gridId"></app-leaderboard-table>
+    <div class="btn-container d-flex flex-row justify-content-end" style="width: 55%;">
+      <button (click)="unmountMojetteGrid(); hasBeenSolved = true; showFinishedGrid = false" class="btn btn-secondary btn-sm">
+        Retour
+      </button>
+    </div>
+  </div>
+</div>

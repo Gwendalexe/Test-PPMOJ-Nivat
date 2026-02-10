@@ -1,0 +1,245 @@
+@use '../../../app/variables.scss';
+
+/* ==========================================================================
+   1. GLOBAL LAYOUT & WRAPPER
+   ========================================================================== */
+
+.game-container {
+  overflow-y: auto;
+  justify-content: center;
+  display: flex;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  width: 100%;
+
+  @media (max-height: 740px) {
+    justify-content: start;
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* Adapts width to the widest content (the grid) */
+  width: fit-content;
+  max-width: 95vw;
+  gap: 1em;
+  align-items: stretch;
+  /* Forces children (Grid & Controls) to match width */
+}
+
+/* ==========================================================================
+   2. GAME CARD (The Grid Container)
+   ========================================================================== */
+
+#nivat-matrix-container {
+  width: 100%;
+  padding: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+
+  /* Card Appearance (Solid Dark Grey) */
+  background-color: #262626;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* --- HEADER & TIMER --- */
+.nivat-matrix-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 1em 10px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  .justify-self-start {
+    justify-self: start;
+  }
+
+  .justify-self-center {
+    justify-self: center;
+  }
+
+  .justify-self-end {
+    justify-self: end;
+  }
+
+  .timer {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+}
+
+/* --- HELP BUTTON --- */
+.btn-help {
+  position: absolute;
+  right: -18px;
+  top: -18px;
+  box-shadow: variables.$card-shadow;
+  margin: 0;
+  color: variables.$secondary-color;
+  background-color: variables.$primary-color-l1;
+  border: 1px solid variables.$primary-color-l3 !important;
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2em;
+  padding: 0;
+  z-index: 10;
+  cursor: pointer;
+
+  &:hover {
+    background-color: variables.$primary-color-l2 !important;
+    box-shadow: variables.$card-shadow-el-2;
+  }
+}
+
+/* ==========================================================================
+   3. CONTROL PANEL (Bottom Section)
+   ========================================================================== */
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+
+  /* Card Appearance (Matches Grid) */
+  background-color: #262626;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+  /* --- Top Row: Label + Dropdown --- */
+  .control-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 15px;
+
+    .label-text {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+  }
+
+  /* --- Bottom Link: Reset --- */
+  .secondary-link {
+    text-decoration: none;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    transition: color 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      color: white;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. CUSTOM DROPDOWN COMPONENT (Replaces Mat-Select)
+   ========================================================================== */
+
+.custom-dropdown {
+  position: relative;
+  width: 140px;
+}
+
+/* Main Trigger Button */
+.dropdown-trigger {
+  width: 100%;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Arrow Icon */
+.arrow {
+  font-size: 0.7em;
+  transition: transform 0.2s;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+/* Options List (Floating Panel) */
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 5px;
+
+  /* Dark Grey Background */
+  background-color: #333333;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Single Option Item */
+.option {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  /* Default: Light Grey */
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+
+  /* Hover State */
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  /* Active/Selected State */
+  &.active {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    /* Pure White */
+    font-weight: bold;
+  }
+}

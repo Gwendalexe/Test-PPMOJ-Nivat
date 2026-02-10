@@ -1,0 +1,477 @@
+@use "../../../app/variables.scss";
+
+.account-card {
+  margin: auto!important;
+  max-width: min(500px, 80vw);
+  width: 20%;
+  min-width: 400px;
+  height: 500px;
+  overflow: hidden;
+}
+
+.card-tab-header {
+  border-bottom: 1px solid variables.$lightgrey;
+  .btn-tab-label {
+    color: variables.$secondary-color;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0.75em;
+    &:first-of-type {
+        border-radius: 20px 0 0 0;
+    }
+    &:last-of-type {
+        border-radius: 0 20px 0 0;
+    }
+    &:hover {
+        background-color: variables.$primary-color-l2;
+    }
+    &:active {
+        border-bottom: 1px solid variables.$accent-color;
+    }
+  }
+  .btn-check:checked + .btn-tab-label {
+    border-bottom: 1px solid variables.$accent-color;
+  }
+}
+
+.account-card-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: variables.$secondary-color;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  & > .edit-account-form, & > .informations-account, & > .admin-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    // margin-top: 1em;
+    font-size: 1.2em;
+    padding: 1.5rem;
+  }
+}
+
+.btn-icon {
+  color: variables.$secondary-color;
+  border-radius: 100%;
+
+  // border: 0!important;
+  top: 0.5em;
+  right: 0.5em;
+  &:hover {
+    background: color-mix(in srgb, variables.$secondary-color 20%, transparent 80%);
+  }
+}
+
+.edit-account-form {
+  display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    padding-bottom: 120px;
+  & > .form-field {
+    padding: 0.5em 0;
+    text-align: left;
+     &:first-of-type {
+      padding-top: 0!important;
+      // background: blue;
+    }
+    &:last-child {
+      padding-bottom:0;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid color-mix(in srgb, variables.$lightgrey 20%, transparent 80%);
+    }
+    & > label {
+      color: variables.$secondary-color;
+      text-align: left;
+      font-size: 0.9em;
+      // font-style: italic;
+      padding: 0;
+      margin: 0;
+      pointer-events: none;
+    }
+    & > span, & > input {
+      margin-left: 1em;
+    }
+    & > span {
+      display: inline-block;
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 1.5em);
+      height: 42px;
+      line-height: 42px;
+    }
+  }
+.rgpd-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, variables.$lightgrey 30%, transparent 70%);
+  background: variables.$primary-color-l1;
+}
+}
+
+.rgpd-section {
+  padding: 1.5rem;
+  padding-top: 0;
+  border-top: 1px solid color-mix(in srgb, variables.$lightgrey 30%, transparent 70%);
+  margin-top: auto;
+
+  .btn {
+    font-size: 0.9em;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 1.1em;
+    }
+
+    &.btn-outline-primary {
+      color: variables.$accent-color;
+      border-color: variables.$accent-color;
+
+      &:hover {
+        background-color: variables.$accent-color;
+        color: white;
+      }
+    }
+
+    &.btn-outline-danger {
+      color: #dc3545;
+      border-color: #dc3545;
+
+      &:hover {
+        background-color: #dc3545;
+        color: white;
+      }
+    }
+  }
+}
+
+.card-footer {
+  border-top: 1px solid color-mix(in srgb, variables.$lightgrey 20%, transparent 80%);
+  width: 100%;
+  margin: 0;
+  position: sticky;
+  background: variables.$primary-color-l1;
+  bottom: 0;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+}
+
+.informations-container {
+  margin-bottom: 1.5em;
+  & > .title {
+    font-size: 1.2em;
+    // font-weight: 600;
+    margin-bottom: 0.5em;
+  }
+  & > .mojette-info {
+    font-size: 0.9em;
+    & > img {
+      height: 20px;
+    }
+    & > span {
+      margin: 0 0 0 0.5em;
+    }
+    & > button {
+      margin: 0;
+      margin-left: auto;
+    }
+  }
+  & > ul > li {
+    font-size: 0.9em;
+    margin-bottom: 0.25em;
+  }
+}
+
+.download-message {
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95em;
+  animation: slideInDown 0.3s ease-in-out;
+
+  &.message-success {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+  }
+
+  &.message-error {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+  }
+
+  .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Delete confirmation modal styles
+.delete-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+}
+
+.delete-confirmation-modal {
+  background-color: rgb(26, 26, 26);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(78, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideInDown 0.3s ease-in-out;
+  box-sizing: border-box;
+
+  .modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid variables.$lightgrey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .modal-title {
+      margin: 0;
+      color: variables.$secondary-color;
+      font-weight: bold;
+    }
+
+    .btn-close {
+      // background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: rgba(220, 53, 69, 0.3);
+      font-size: 1.5rem;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+    color: variables.$secondary-color;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+
+    .alert {
+      margin: 0 0 1rem 0;
+      padding: 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      position: static;
+      z-index: auto;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      i {
+        font-size: 1.2em;
+        flex-shrink: 0;
+      }
+    }
+
+    ul {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      width: 100%;
+      box-sizing: border-box;
+
+      .form-check-input {
+        margin-top: 0.3rem;
+        cursor: pointer;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid variables.$lightgrey;
+        border-radius: 4px;
+        background-color: variables.$primary-color;
+        accent-color: variables.$accent-color;
+
+        &:checked {
+          background-color: variables.$accent-color;
+          border-color: variables.$accent-color;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      .form-check-label {
+        margin: 0;
+        cursor: pointer;
+        flex: 1 1 auto;
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+
+      .form-check-input {
+        margin-top: 0.3rem;
+        cursor: pointer;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid variables.$lightgrey;
+        border-radius: 4px;
+        background-color: variables.$primary-color;
+        accent-color: variables.$accent-color;
+
+        &:checked {
+          background-color: variables.$accent-color;
+          border-color: variables.$accent-color;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      .form-check-label {
+        margin: 0;
+        cursor: pointer;
+        flex: 1;
+
+        &:has(+ .form-check-input:disabled) {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid variables.$lightgrey;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .spinner-border-sm {
+        width: 1rem;
+        height: 1rem;
+        border-width: 0.15em;
+      }
+    }
+  }
+}
+
+// Delete status message styles
+.delete-message {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95em;
+  animation: slideInDown 0.3s ease-in-out;
+
+  &.message-success {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+  }
+
+  &.message-error {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+  }
+
+  .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+  }
+}
+  // .button-container {
+  //   width: 100%;
+  // }

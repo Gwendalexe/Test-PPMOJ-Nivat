@@ -1,0 +1,90 @@
+{
+	"[css]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[markdown]": {
+		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+		"editor.formatOnSave": true,
+		"editor.indentSize": "tabSize",
+		"editor.insertSpaces": true,
+		"editor.quickSuggestions": {
+			"comments": "off",
+			"other": "off",
+			"strings": "off"
+		},
+		"editor.tabSize": 2,
+		"editor.unicodeHighlight.ambiguousCharacters": false,
+		"editor.unicodeHighlight.invisibleCharacters": false,
+		"files.insertFinalNewline": true,
+		"files.trimTrailingWhitespace": false,
+	},
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.autopep8",
+		"editor.formatOnType": false,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"typescript.preferences.importModuleSpecifierEnding": "minimal",
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
+	},
+	"auto-close-tag.SublimeText3Mode": true,
+	"conventionalCommits.editor.keepAfterSave": true,
+	"conventionalCommits.lineBreak": "\\n",
+	"conventionalCommits.scopes": [
+		"global",
+		"backend",
+		"frontend",
+		"mojette",
+		"carres",
+		"formations",
+		"problems",
+		"nivat"
+	],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.ts": "explicit",
+		"source.fixAll.markdownlint": "explicit",
+		"source.fixAll.pylance": "explicit",
+		"source.organizeImports": "explicit"
+	},
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "modificationsIfAvailable",
+	"editor.linkedEditing": true,
+	"emmet.excludeLanguages": [
+		"markdown"
+	],
+	"files.associations": {
+		"*.env": "env",
+		".env": "env",
+		".env.*": "env"
+	},
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"flake8.args": [
+		"--max-line-length=120"
+	],
+	"git.autofetch": true,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"markdownlint.config": {
+		"MD024": {
+			"siblings_only": true
+		}
+	}
+}

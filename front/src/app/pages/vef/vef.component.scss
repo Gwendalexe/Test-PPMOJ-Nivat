@@ -1,0 +1,19 @@
+/* game.component.scss */
+
+.map {
+  flex: 1;
+  max-height: 90vh;
+  margin: 0;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100vh; 
+}
+
+#problemes, #map {
+  flex: 1;
+}

@@ -1,0 +1,156 @@
+<div class="backoffice-page-container">
+  <div class="backoffice-header">
+    <a routerLink="/backoffice" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Retour au backoffice
+    </a>
+    <h1 class="page-title zilla-slab">Gestion des Énigmes de la semaine</h1>
+  </div>
+
+  <div class="alerts-container" *ngIf="error || deleteError || deleteSuccess || toggleError || toggleSuccess">
+    <div class="alert alert-error" *ngIf="error || deleteError || toggleError">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>{{ error || deleteError || toggleError }}</span>
+    </div>
+    <div class="alert alert-success" *ngIf="deleteSuccess || toggleSuccess">
+      <i class="bi bi-check-circle-fill"></i>
+      <span>{{ deleteSuccess || toggleSuccess }}</span>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <a routerLink="/backoffice/weekproblem/0" class="btn btn-primary btn-elevated">
+      <i class="bi bi-plus-circle"></i>
+      Nouvelle énigme de la semaine
+    </a>
+  </div>
+
+  <div class="weekproblems-container" *ngIf="!loading; else loadingState">
+    <div class="weekproblems-grid" *ngIf="weekProblems.length > 0; else emptyState">
+      <div *ngFor="let wp of weekProblems" class="weekproblem-card">
+        <div class="card-header">
+          <div class="weekproblem-id">
+            #{{ wp.id }}<span *ngIf="wp.date"> - Semaine {{ getISOWeekFromString(wp.date) }}</span>
+          </div>
+          <div class="weekproblem-status">
+            <span class="status-badge" [class.displayed]="wp.displayed" [class.hidden]="!wp.displayed">
+              <i [class]="wp.displayed ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
+              {{ wp.displayed ? 'Affichée' : 'Masquée' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="info-row">
+            <div class="info-item">
+              <i class="bi bi-calendar3"></i>
+              <div class="info-content">
+                <label>Date</label>
+                <span>{{ wp.date || 'Non définie' }}</span>
+              </div>
+            </div>
+            <div class="info-item" *ngIf="wp.date">
+              <i class="bi bi-calendar-week"></i>
+              <div class="info-content">
+                <label>Semaine</label>
+                <span class="number-badge">#{{ getISOWeekFromString(wp.date) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row rewards-row">
+            <div class="info-item" *ngIf="(wp.reward_mojette ?? 0) > 0">
+              <img src="assets/boutique/formations/formation_beans.png" alt="Mojettes" style="width:30px;height:30px;object-fit:contain;margin-right:6px;">
+              <div class="info-content">
+                <label>Récompense Mojettes</label>
+                <span class="number-badge">{{ wp.reward_mojette }}</span>
+              </div>
+            </div>
+            <div class="info-item" *ngIf="(wp.reward_token_coin ?? 0) > 0">
+              <img src="assets/boutique/formations/formation_unique_resized.png" alt="Tokens" style="width:30px;height:30px;object-fit:contain;margin-right:6px;">
+              <div class="info-content">
+                <label>Récompense Tokens</label>
+                <span class="number-badge">{{ wp.reward_token_coin }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row" *ngIf="wp.figure_path">
+            <div class="info-item">
+              <i class="bi bi-image"></i>
+              <div class="info-content">
+                <label>Figure</label>
+                <span class="truncate">{{ wp.figure_path }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-item">
+              <i class="bi bi-question-circle"></i>
+              <div class="info-content">
+                <label>Nombre de valeurs à trouver</label>
+                <span class="number-badge">{{ wp.nb_val_to_find || 0 }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row" *ngIf="wp.variables && wp.variables.length > 0">
+            <div class="info-item">
+              <i class="bi bi-sliders"></i>
+              <div class="info-content">
+                <label>Variables</label>
+                <div class="variables-list">
+                  <span class="variable-badge" *ngFor="let variable of wp.variables">
+                    {{ variable }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button
+            (click)="onEdit(wp.id)"
+            class="btn-action edit">
+            <i class="bi bi-pencil"></i>
+            Modifier
+          </button>
+          <button
+            (click)="onToggleDisplay(wp.id, wp.displayed)"
+            class="btn-action toggle"
+            [class.active]="wp.displayed">
+            <i [class]="wp.displayed ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            {{ wp.displayed ? 'Masquer' : 'Afficher' }}
+          </button>
+          <button
+            (click)="onDelete(wp.id)"
+            class="btn-action delete">
+            <i class="bi bi-trash"></i>
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <i class="bi bi-calendar-week"></i>
+        <h3>Aucune énigme trouvée</h3>
+        <p>Il n'y a aucune énigme de la semaine dans le système pour le moment.</p>
+        <a routerLink="/backoffice/weekproblem/0" class="btn btn-primary btn-elevated">
+          <i class="bi bi-plus-circle"></i>
+          Créer la première énigme
+        </a>
+      </div>
+    </ng-template>
+  </div>
+
+  <ng-template #loadingState>
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des énigmes...</p>
+    </div>
+  </ng-template>
+</div>

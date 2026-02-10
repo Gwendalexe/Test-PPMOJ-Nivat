@@ -1,0 +1,16 @@
+{
+  "games": [
+    {
+      "id": 1,
+      "name": "Probleme"
+    },
+    {
+      "id": 2,
+      "name": "Mojette"
+    },
+    {
+      "id": 3,
+      "name": "Carre"
+    }
+  ]
+}

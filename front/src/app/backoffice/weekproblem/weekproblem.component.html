@@ -1,0 +1,292 @@
+<div class="weekproblem-container">
+  <div class="backoffice-header">
+    <a href="/backoffice/weekproblems" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Retour à la liste
+    </a>
+    <h1 class="page-title">{{ isEdit ? 'Modifier' : 'Créer' }} une Énigme de la semaine</h1>
+  </div>
+
+  <div class="content-wrapper">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p>Chargement...</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-error">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>{{ error }}</span>
+    </div>
+
+    <form [formGroup]="weekProblemForm" class="week-problem-form">
+      <!-- Basic Information Section -->
+      <div class="form-section">
+        <h2 class="section-title">Informations de base</h2>
+
+        <div class="form-group">
+          <label for="nb_val_to_find">Nombre de valeurs à trouver *</label>
+          <input
+            id="nb_val_to_find"
+            type="number"
+            formControlName="nb_val_to_find"
+            min="1"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="date">Date du lundi de la semaine *</label>
+          <input
+            id="date"
+            type="date"
+            formControlName="date"
+            class="form-control">
+        </div>
+      </div>
+
+      <!-- Problem Description Section -->
+      <div class="form-section">
+        <h2 class="section-title">Description du problème</h2>
+
+        <div class="form-group">
+          <label for="problem_statement">Énoncé du problème *</label>
+          <textarea
+            id="problem_statement"
+            formControlName="problem_statement"
+            rows="4"
+            class="form-control"
+            placeholder="Décrivez le problème..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="problem_question">Question du problème *</label>
+          <textarea
+            id="problem_question"
+            formControlName="problem_question"
+            rows="3"
+            class="form-control"
+            placeholder="Posez la question..."></textarea>
+        </div>
+      </div>
+
+      <!-- Image Section -->
+      <div class="form-section">
+        <h2 class="section-title">Illustration</h2>
+
+        <div class="form-group">
+          <label for="image_input">Illustration de l'énigme *</label>
+          <div class="file-input-wrapper">
+            <input
+              id="image_input"
+              type="file"
+              accept="image/*"
+              (change)="importImage($event)"
+              class="file-input" />
+            <label for="image_input" class="file-label">
+              <i class="bi bi-cloud-upload"></i>
+              <span>Cliquez pour sélectionner une image</span>
+            </label>
+          </div>
+          <div *ngIf="imageUploading" class="upload-status">
+            <div class="spinner-border spinner-sm"></div>
+            <span>Envoi de l'image en cours...</span>
+          </div>
+          <div *ngIf="imageUrl" class="image-preview">
+            <img [src]="getImageUrl()" alt="Aperçu de l'illustration">
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards Section -->
+      <div class="form-section">
+        <h2 class="section-title">Récompenses</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reward_mojette">Récompense (Mojettes)</label>
+            <input
+              id="reward_mojette"
+              type="number"
+              formControlName="reward_mojette"
+              min="0"
+              class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="reward_token_coin">Récompense (Token Coins)</label>
+            <input
+              id="reward_token_coin"
+              type="number"
+              formControlName="reward_token_coin"
+              min="0"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- Variables Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">Variables</h2>
+          <p class="section-hint">Une par ligne, exemple : "c", puis "a+b", ...</p>
+        </div>
+
+        <div formArrayName="variables" class="array-form">
+          <div *ngFor="let ctrl of variables.controls; let i = index" class="array-item">
+            <input
+              [formControlName]="i"
+              class="form-control"
+              placeholder="Variable">
+            <button
+              type="button"
+              (click)="removeVariable(i)"
+              *ngIf="variables.length > 1"
+              class="btn-remove"
+              title="Supprimer">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <button
+            type="button"
+            (click)="addVariable()"
+            class="btn btn-add btn-sm">
+            <i class="bi bi-plus-circle"></i>
+            Ajouter une variable
+          </button>
+        </div>
+      </div>
+
+      <!-- Values List Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">Liste des valeurs</h2>
+          <p class="section-hint">Un tableau à chaque ligne, exemple: [1,2,3]</p>
+        </div>
+
+        <div formArrayName="values_list" class="array-form">
+          <div *ngFor="let ctrl of values_list.controls; let i = index" class="array-item">
+            <input
+              [formControlName]="i"
+              class="form-control"
+              placeholder="[valeur1, valeur2, ...]">
+            <button
+              type="button"
+              (click)="removeValueList(i)"
+              *ngIf="values_list.length > 1"
+              class="btn-remove"
+              title="Supprimer">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <button
+            type="button"
+            (click)="addValueList()"
+            class="btn btn-add btn-sm">
+            <i class="bi bi-plus-circle"></i>
+            Ajouter un tableau de valeurs
+          </button>
+        </div>
+      </div>
+
+      <!-- Solution Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">Solutions</h2>
+          <p class="section-hint">Un tableau à chaque ligne, exemple: [1,2,3]</p>
+        </div>
+
+        <div formArrayName="solution" class="array-form">
+          <div *ngFor="let ctrl of solution.controls; let i = index" class="array-item">
+            <input
+              [formControlName]="i"
+              class="form-control"
+              placeholder="[solution1, solution2, ...]">
+            <button
+              type="button"
+              (click)="removeSolution(i)"
+              *ngIf="solution.length > 1"
+              class="btn-remove"
+              title="Supprimer">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <button
+            type="button"
+            (click)="addSolution()"
+            class="btn btn-add btn-sm">
+            <i class="bi bi-plus-circle"></i>
+            Ajouter une solution
+          </button>
+        </div>
+      </div>
+
+      <!-- JSON Preview Section -->
+      <div class="form-section">
+        <h2 class="section-title">Aperçu JSON</h2>
+        <p class="section-hint">Vous pouvez copier ce JSON ou le coller depuis un fichier existant</p>
+
+        <div class="json-preview-wrapper">
+          <textarea
+            class="json-preview"
+            [value]="getJsonPreview()"
+            spellcheck="false"
+            placeholder="Collez votre JSON ici...">
+          </textarea>
+          <div class="json-actions">
+            <button
+              type="button"
+              (click)="copyJsonToClipboard()"
+              class="btn btn-add btn-sm"
+              title="Copier le JSON">
+              <i class="bi bi-clipboard"></i>
+              Copier le JSON
+            </button>
+            <button
+              type="button"
+              (click)="applyJsonFromTextarea()"
+              class="btn btn-add btn-sm"
+              title="Appliquer le JSON">
+              <i class="bi bi-arrow-repeat"></i>
+              Appliquer le JSON
+            </button>
+          </div>
+          <div *ngIf="jsonError" class="alert alert-json-error" style="margin-top: 1rem; margin-bottom: 0;">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ jsonError }}</span>
+          </div>
+          <div *ngIf="jsonSuccess" class="alert alert-json-success" style="margin-top: 1rem; margin-bottom: 0;">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ jsonSuccess }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div *ngIf="submitError" class="alert alert-error">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ submitError }}</span>
+      </div>
+
+      <div *ngIf="submitSuccess" class="alert alert-success">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>{{ submitSuccess }}</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button
+          type="button"
+          (click)="submit()"
+          [disabled]="loading"
+          class="btn btn-primary btn-lg">
+          <i class="bi" [class.bi-floppy-disk]="isEdit" [class.bi-plus-circle]="!isEdit"></i>
+          {{ isEdit ? 'Enregistrer les modifications' : 'Créer l\'énigme' }}
+        </button>
+        <a href="/backoffice/weekproblems" class="btn btn-outline btn-lg">
+          Annuler
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

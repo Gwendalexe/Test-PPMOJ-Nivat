@@ -1,0 +1,134 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "watch front",
+            "type": "npm",
+            "script": "start-host",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/front"
+            },
+            "icon": {
+                "id": "eye-watch"
+            },
+            "problemMatcher": [
+                {
+                    "base": "$tsc-watch",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/front"
+                    ]
+                },
+                {
+                    "base": "$tsc-watch",
+                    "pattern": {
+                        "regexp": "^\\s*(?:(?:Error|Warning|Info)(?: in|:) )?([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):\\s+|\\s+-\\s+)(error|warning|info)\\s+(NG\\d+)\\s*:\\s*(.*)",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "code": 5,
+                        "message": 6
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Build at:.*",
+                        "endsPattern": ". Compiled successfully\\."
+                    },
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/front"
+                    ],
+                    "source": "Angular"
+                }
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        {
+            "label": "watch back",
+            "type": "shell",
+            "command": "flask --app app run --reload",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/back"
+            },
+            "group": "none",
+            "icon": {
+                "id": "eye-watch"
+            },
+            "problemMatcher": [
+                "$python"
+            ]
+        },
+        {
+            "label": "Apply migrations",
+            "type": "shell",
+            "command": "flask db upgrade head -d database/migrations/",
+            "options": {
+                "cwd": "${workspaceFolder}/back"
+            },
+            "icon": {
+                "id": "database"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Create migration",
+            "type": "shell",
+            "command": "flask db migrate -d database/migrations/ -m \"${input:migrationDesc}\"",
+            "options": {
+                "cwd": "${workspaceFolder}/back"
+            },
+            "icon": {
+                "id": "database"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Update DB schema graph",
+            "type": "shell",
+            "command": "python3 script_db.py -d",
+            "options": {
+                "cwd": "${workspaceFolder}/back"
+            },
+            "icon": {
+                "id": "info"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "lint",
+            "detail": "eslint --cache src/**",
+            "type": "npm",
+            "script": "lint",
+            "path": "front",
+            "problemMatcher": [
+                "$eslint-stylish"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/front"
+            },
+            "icon": {
+                "id": "checklist"
+            },
+        },
+    ],
+    "inputs": [
+        {
+            "id": "migrationDesc",
+            "type": "promptString",
+            "description": "Describe the migration",
+            "default": "Default description"
+        }
+    ]
+}

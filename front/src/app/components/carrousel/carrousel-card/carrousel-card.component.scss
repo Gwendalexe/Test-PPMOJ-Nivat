@@ -1,0 +1,42 @@
+@use "../../../../app/variables.scss";
+
+.carrousel-card {
+    transition: all 0.2s ease-out;
+    max-width: 300px;
+    max-height: 400px;
+    width: 100%;
+    padding: 0 !important;
+
+    @media (min-width: 768px) {
+        left: 0 !important;
+
+        &.clickable:hover {
+            background: variables.$primary-color-l2 !important;
+            top: -3px;
+            box-shadow: variables.$card-shadow-el-2 !important;
+            cursor: pointer;
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 450px;
+        display: flex !important;
+        align-items: center;
+        position: relative;
+        transform: scale(0.95);
+        transition: all 0.3s ease-out;
+        box-shadow: variables.$card-shadow;
+
+        &.active {
+            background: variables.$primary-color-l2;
+            transform: scale(1);
+            box-shadow: variables.$card-shadow-el-2;
+        }
+    }
+
+    @media (max-height: 720px) {
+        height: unset;
+        min-height: 100%;
+    }
+}

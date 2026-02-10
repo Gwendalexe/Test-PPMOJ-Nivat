@@ -1,0 +1,88 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Backend",
+      "args": [
+        "run",
+        "--no-debugger",
+        "--no-reload"
+      ],
+      "autoStartBrowser": false,
+      "cwd": "${workspaceFolder}/back",
+      "env": {
+        "FLASK_APP": "app.py",
+        "FLASK_DEBUG": "1"
+      },
+      "jinja": true,
+      "module": "flask",
+      "request": "launch",
+      "type": "debugpy"
+    },
+    // Config for launching Frontend debugger if using the dev container
+    {
+      "name": "Chrome (UI) debug Frontend",
+      "browserLaunchLocation": "ui",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    },
+    {
+      "name": "Edge (UI) debug Frontend",
+      "browserLaunchLocation": "ui",
+      "request": "launch",
+      "type": "msedge",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    },
+    {
+      "name": "Opera (UI) debug Frontend",
+      "browserLaunchLocation": "ui",
+      "request": "launch",
+      "runtimeArgs": [],
+      "runtimeExecutable": "opera",
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    },
+    // Config for launching Frontend debugger if not using the dev container
+    {
+      "name": "Chrome (workspace) debug Frontend",
+      "browserLaunchLocation": "workspace",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    },
+    {
+      "name": "Edge (workspace) debug Frontend",
+      "browserLaunchLocation": "workspace",
+      "request": "launch",
+      "type": "msedge",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    },
+    {
+      "name": "Opera (workspace) debug Frontend",
+      "browserLaunchLocation": "workspace",
+      "request": "launch",
+      "runtimeArgs": [],
+      "linux": {
+        "runtimeExecutable": "/usr/bin/opera",
+      },
+      "windows": {
+        "runtimeExecutable": "%LocalAppData%\\Programs\\Opera\\Opera.exe"
+      },
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/front",
+      "preLaunchTask": "watch front"
+    }
+  ]
+}

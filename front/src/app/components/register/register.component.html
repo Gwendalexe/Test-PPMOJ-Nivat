@@ -1,0 +1,177 @@
+<dialog
+  #connectDialog
+  id="connectDialog"
+  class="dialog-container no-scrollbar"
+  style="overflow: auto">
+  <div class="dialog-card d-flex flex-column">
+    <button
+      type="button"
+      class="dialog-close-btn"
+      aria-label="Close"
+      (click)="closeDialog()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <mat-card-title
+      *ngIf="!hasRegistered && !isConnected"
+      class="register-title">
+      {{ isRegisterMode ? 'Inscription' : 'Connexion' }}
+    </mat-card-title>
+    <mat-card-content
+      class="dialog-content"
+      *ngIf="!hasRegistered && !isConnected"
+      style="overflow: auto">
+      <form
+        *ngIf="!isRegisterMode"
+        id="login-form"
+        class="d-flex flex-column"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()">
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            placeholder="Pseudo ou e-mail"
+            [formControl]="getLoginField('identifier')"
+            name="identifier"
+            autocomplete="identifier"
+            required />
+          <mat-error *ngIf="getLoginField('identifier').errors?.['required']">
+            Le pseudo ou l'e-mail est requis.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            placeholder="Mot de passe"
+            [formControl]="getLoginField('password')"
+            autocomplete="current-password"
+            name="password"
+            [type]="hideLoginPassword ? 'password' : 'text'"
+            required/>
+
+          <mat-icon
+            style="cursor: pointer"
+            (click)="hideLoginPassword = !hideLoginPassword">
+            {{ hideLoginPassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+          <mat-error *ngIf="getLoginField('password').errors?.['required']">
+            Le mot de passe est requis.
+          </mat-error>
+          <mat-error *ngIf="getLoginField('password').errors?.['minlength']">
+            Le mot de passe est trop court.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- erreurs générales -->
+        <mat-error *ngIf="serverError['401']">
+          Nom d'utilisateur ou mot de passe incorrect
+        </mat-error>
+
+        <div class="modal-actions d-flex flex-row flex-wrap justify-content-between">
+          <button type="button" class="btn btn-secondary btn-sm modal-btn" (click)="toggleRegisterMode()">
+            Créer un compte
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm modal-btn" [disabled]="loginForm.invalid || loading">
+            Se connecter
+          </button>
+        </div>
+
+        <a class="lostpassword" href="/lostpassword">Mot de passe oublié ?</a>
+      </form>
+      <form
+        *ngIf="isRegisterMode"
+        id="register-form"
+        class="d-flex flex-column"
+        [formGroup]="registerForm"
+        (ngSubmit)="register()">
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            placeholder="Pseudo"
+            [formControl]="getRegisterField('username')"
+            name="username"
+            autocomplete="username"
+            required />
+          <mat-error *ngIf="getRegisterField('username').errors?.['minlength'] ||
+                            getRegisterField('username').errors?.['maxlength']"
+            >Le pseudo n'est pas dans le bon format</mat-error
+          >
+          <mat-error *ngIf="getRegisterField('username').errors?.['required']">
+            Le pseudo est requis.
+          </mat-error>
+          <mat-error *ngIf="getRegisterField('username').errors?.['alreadyUsed']">
+            Ce pseudo est déjà utilisé.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            placeholder="E-mail"
+            [formControl]="getRegisterField('email')"
+            name="email"
+            autocomplete="email"
+            required />
+          <mat-error *ngIf="getRegisterField('email').errors?.['required']">
+            L'e-mail est requis.
+          </mat-error>
+          <mat-error *ngIf="getRegisterField('email').errors?.['email']">
+            L'e-mail n'est pas valide.
+          </mat-error>
+          <mat-error *ngIf="getRegisterField('email').errors?.['alreadyUsed']">
+            Cet e-mail est déjà utilisé.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            placeholder="Mot de passe"
+            [formControl]="getRegisterField('password')"
+            name="password"
+            autocomplete="new-password"
+            [type]="hideRegisterPassword ? 'password' : 'text'"
+            required/>
+
+          <mat-icon
+            style="cursor: pointer"
+            (click)="hideRegisterPassword = !hideRegisterPassword">
+            {{ hideRegisterPassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+          <mat-error *ngIf="getRegisterField('password').errors?.['required']">
+            Le mot de passe est requis.
+          </mat-error>
+          <mat-error *ngIf="getRegisterField('password').errors?.['minlength']">
+            Le mot de passe est trop court (6 min).
+          </mat-error>
+        </mat-form-field>
+
+        <div class="modal-actions d-flex flex-row flex-wrap justify-content-between">
+          <button type="button" class="btn btn-secondary btn-sm modal-btn" (click)="toggleRegisterMode()">
+            Se connecter
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm modal-btn" [disabled]="registerForm.invalid || loading">
+            S'inscrire
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-title *ngIf="hasRegistered" class="register-title"
+      >Confirmation de l'adresse e-mail</mat-card-title
+    >
+    <mat-card-content
+      *ngIf="hasRegistered"
+      class="dialog-content"
+      style="overflow: auto">
+      <span class="d-block"
+        >Pour accéder à toutes les fonctionnalités du site, veuillez confirmer
+        votre adresse e-mail en vérifiant votre boîte de réception.</span
+      >
+      <span class="d-block"
+        >Vérifiez également votre dossier spam au cas où vous ne trouveriez pas
+        l'e-mail de confirmation dans votre boîte de réception principale.</span
+      >
+    </mat-card-content>
+  </div>
+</dialog>

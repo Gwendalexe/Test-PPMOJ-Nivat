@@ -1,0 +1,269 @@
+@use "../../../app/variables.scss";
+
+.navbar {
+  background-color: transparent!important;
+  padding: 0!important;
+  color: var(--text-color)!important;
+  min-height: 54px;
+  z-index: 2;
+
+  & > button.navbar-toggler {
+    position: relative;
+    border: 0;
+    height: 70%;
+    aspect-ratio: 1/1;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+    border-radius: 8px!important;
+    left: 1em;
+    color: var(--text-color);
+    & > img {
+      max-height: 100%;
+    }
+    &:hover {
+      background-color: color-mix(in srgb, var(--text-color) 10%, transparent 90%);
+    }
+
+    & > span {
+      font-size: 1.2em;
+      color: var(--text-color)!important;
+    }
+  }
+  & > .dropstart {
+    right: 1em;
+  }
+}
+
+#offcanvasNavbar {
+  background-color: color-mix(in srgb, black 70%, transparent 30%);
+  width: 340px;
+  backdrop-filter: blur(10px);
+  border-right: color-mix(in srgb, black 80%, transparent 20%);
+  padding: 1em 0;
+  & > .offcanvas-header {
+    position: absolute;
+    justify-content: flex-end;
+    padding: 2em 5%;
+    font-size: 1em;
+    // width: 100%;
+    z-index: 2;
+    right: 1em;
+  }
+  & > .offcanvas-body {
+    padding: 0;
+  }
+  & > .offcanvas-body > .offcanvas-section {
+    padding: 1em;
+    & > .nav-link {
+      font-size: 1.6em;
+      margin: 0.5em 0;
+    }
+    &:not(:last-child) {
+      position: relative;
+      // border-bottom: 1px solid color-mix(in srgb, variables.$primary-color 60%, white 40%);
+      &:after {
+        content:"";
+        display: block;
+        width: 60%;
+        position: absolute;
+        bottom: 0;
+        left: 1em;
+        height: 1px;
+        background-color: color-mix(in srgb, variables.$primary-color 60%, white 40%);
+      }
+    }
+  }
+  & a {
+    color: white!important;
+    &:hover {
+      color: var(--accent-color)!important;
+    }
+  }
+}
+
+h2.titre {
+  margin: 0 auto;
+  padding: 3px;
+  & > a {
+    color: variables.$secondary-color!important;
+    text-decoration: none;
+  }
+    &.titre--dark>a {
+      color: #000000 !important;
+    }
+  @media (max-width: 991px) {
+    margin-left: 3.5em;
+  }
+}
+
+.navbar-button-container {
+  // background: green;
+  right: 1em;
+}
+
+.login-button {
+  top: 0.5em;
+  right: 1em;
+}
+
+.account-button {
+  margin: 0;
+  z-index: 10;
+  max-width: 168px;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color)!important;
+  @media (max-width: 768px) {
+    border: 0 !important;
+    width: fit-content;
+    max-width: 168px;
+    & > div {
+      padding-right: 0;
+    }
+    // & > div > span {
+      // display: none;
+    // }
+
+    & > div > i {
+      font-size: 1.1em;
+      margin-right: 0.25em;
+    }
+  }
+}
+
+.login-button, .account-button {
+  background: transparent!important;
+  &:hover {
+    background: color-mix(in srgb, var(--secondary-color) 10%, transparent 90%)!important;
+  }
+}
+
+.ItemsButtonLogin {
+  height: 100%;
+  align-items: center!important;
+  flex: 1;
+  justify-content: space-between;
+  max-width: 138px;
+  & > i {
+    padding: 0 0.5em 0 0;
+    font-size: 1.15em;
+    @media (max-width: 768px) {
+      padding: 2px;
+    }
+  }
+  & > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.dropstart {
+  z-index: 2;
+  width: 168px;
+  @media (max-width: 768px) {
+    width: 130px;
+  }
+}
+
+.dropdown-menu {
+  position: absolute!important;
+  // background: color-mix(in srgb, var(--secondary-color) 10%, transparent 90%) !important;
+  background: transparent!important;
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  top: -100px;
+  right: 0;
+  width: 168px;
+  max-width: 168px;
+  min-width: unset;
+  opacity: 0;
+  transition: all 0.2s ease-out;
+  z-index: 9;
+  overflow: hidden;
+  &.show {
+    opacity: 1;
+    top: 37px !important;
+    margin-left: auto!important;
+  }
+  & > li > button {
+    font-size: 1em;
+    margin: auto;
+  }
+  & > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75em 1em;
+    margin: 0;
+    font-size: 0.9em;
+    background: transparent;
+    &.clickable:hover {
+      // color: var(--accent-color);
+      background: color-mix(in srgb, var(--secondary-color) 10%, transparent 90%);
+      cursor: pointer;
+    }
+
+    &.account-info.token {
+      & > span:first-child {
+        font-size: 16px;
+        margin: 0;
+      }
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--secondary-color);
+    }
+    & > span {
+      margin: 0 0 0 0.5em;
+      overflow: auto;
+      text-wrap: nowrap;
+      // text-overflow: ellipsis;
+    }
+    & > img {
+      height: 16px;
+    }
+
+  }
+}
+
+.navbar-icon {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.mojette-span-container, .token-span-container {
+  flex-direction: row;
+  vertical-align: center;
+  text-align: center;
+  align-items: center;
+  margin-right: 4px;
+  justify-content: space-between;
+  height: 36px;
+  max-width: 120px;
+  padding: 0 0.5em;
+  z-index: 11;
+
+  & > img {
+    height: 16px;
+  }
+  & > span {
+    padding-left: 0.5em;
+  }
+  & > .material-symbols-outlined {
+    font-size: 18px;
+  }
+}
+
+.dark-theme .mojette-span-container {
+  & > img {
+    filter: invert(100);
+  }
+}

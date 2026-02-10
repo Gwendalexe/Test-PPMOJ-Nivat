@@ -1,0 +1,27 @@
+<div
+  class="container-fluid home-container d-flex flex-column align-items-center">
+  <dialog
+    id="connectDialog"
+    class="dialog-container no-scrollbar"
+    style="overflow: auto">
+    <div class="dialog-card d-flex flex-column">
+      <mat-card-title class="register-title"
+        >Confirmation de compte réussie</mat-card-title
+      >
+      <mat-card-content class="dialog-content" style="overflow: auto">
+        <span class="d-block"
+          >Votre compte a été confirmé avec succès. Vous pouvez maintenant vous
+          connecter et profiter pleinement de notre plateforme.</span
+        >
+      </mat-card-content>
+      <div
+        class="modal-actions d-flex flex-row flex-wrap justify-content-center">
+        <button
+          class="btn btn-primary btn-sm modal-btn"
+          (click)="goToHomePage()">
+          Accueil
+        </button>
+      </div>
+    </div>
+  </dialog>
+</div>

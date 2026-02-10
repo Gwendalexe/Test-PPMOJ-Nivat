@@ -1,0 +1,42 @@
+$primary-color : #0A0F0D;
+$secondary-color : #F5EFED;
+$accent-color : #D972FF;
+$success-color : #7DDF64;
+$progress-color : #dfbe64;
+$danger-color : #ed2525;
+$valid-color : $success-color;
+// --formation-yellow: #FFDE59;
+
+$primary-color-d2: color-mix(in srgb, $primary-color 80%, black 20%);
+$primary-color-l1: color-mix(in srgb, $primary-color 90%, white 10%);
+$primary-color-l2: color-mix(in srgb, $primary-color 80%, white 20%);
+$primary-color-l3: color-mix(in srgb, $primary-color 70%, white 30%);
+$primary-color-l4: color-mix(in srgb, $primary-color 60%, white 40%);
+
+$accent-color-d2: color-mix(in srgb, $accent-color 80%, black 20%);
+$accent-color-l2: color-mix(in srgb, $accent-color 80%, white 20%);
+$accent-color-l4: color-mix(in srgb, $accent-color 60%, white 40%);
+
+$valid-color-d3: color-mix(in srgb, $valid-color 70%, black 30%);
+
+$darkgrey: color-mix(in srgb, rgb(199, 199, 199) 80%, black 20%);
+$lightgrey: color-mix(in srgb, rgb(199, 199, 199) 80%, white 20%);
+
+$card-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),
+              0px 1px 1px 0px rgba(0,0,0,0.14),
+              0px 1px 3px 0px rgba(0,0,0,0.12);
+
+$card-shadow-el-1: 0px 1px 4px -1px rgba(0,0,0,0.2),
+            0px 2px 3px 0px rgba(0,0,0,0.14),
+            0px 1px 6px 0px rgba(0,0,0,0.12);
+
+$card-shadow-el-2: 0px 4px 5px -2px rgba(0,0,0,0.2),
+            0px 4px 5px 1px rgba(0,0,0,0.14),
+            0px 3px 9px 2px rgba(0,0,0,0.12);
+
+$body-bg: $primary-color;
+$body-color: $secondary-color;
+$bs-btn-bg: $secondary-color;
+$bs-nav-link-color: $secondary-color;
+
+$base-margin: 8px;

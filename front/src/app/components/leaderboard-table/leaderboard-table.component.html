@@ -1,0 +1,52 @@
+<div id="leaderboard-matrix-container" class="card primary-card">
+  <h2 class="text-center">Classement</h2>
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Temps</th>
+        <th>Indice</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let player of leaderboard.top; let i = index"
+        [ngClass]="{ highlight: player.user_id === user.user_id }">
+        <td>{{ player.position }}.{{ player.username }}</td>
+        <td>{{ player.completion_time }}s</td>
+        <td>{{ player.helps_used }}</td>
+        <td>{{ player.score }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="displayDots">
+      <tr>
+        <td colspan="4" style="text-align: center">...</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="hasUserSolvedGrid" class="above-section">
+      <tr *ngFor="let player of leaderboard.above_user; let i = index">
+        <td>{{ player.position }}.{{ player.username }}</td>
+        <td>{{ player.completion_time }}s</td>
+        <td>{{ player.helps_used }}</td>
+        <td>{{ player.score }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="displayUser && hasUserSolvedGrid" class="user-section">
+      <tr class="highlight">
+        <td>{{ user.position }}.{{ user.username }}</td>
+        <td>{{ user.completion_time }}s</td>
+        <td>{{ user.helps_used }}</td>
+        <td>{{ user.score }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="hasUserSolvedGrid" class="below-section">
+      <tr *ngFor="let player of leaderboard.below_user; let i = index">
+        <td>{{ player.position }}.{{ player.username }}</td>
+        <td>{{ player.completion_time }}s</td>
+        <td>{{ player.helps_used }}</td>
+        <td>{{ player.score }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

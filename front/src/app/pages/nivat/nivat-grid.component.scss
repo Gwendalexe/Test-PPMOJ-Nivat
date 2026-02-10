@@ -1,0 +1,115 @@
+/* ==========================================================================
+   NIVAT GRID COMPONENT STYLES
+   ========================================================================== */
+
+// --- 1. IMPORTS & CONFIGURATION ---
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+// Dimensions Configuration
+$cell-size: 48px;
+$control-thickness: 24px;
+
+$cell-size-mobile: 36px;
+$control-thickness-mobile: 18px;
+
+// Shared Helper: Flexbox Centering
+%flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   2. MAIN LAYOUT
+   ========================================================================== */
+
+.nivat-board {
+    display: grid;
+    gap: 4px;
+    justify-content: center;
+    padding: 10px;
+    user-select: none;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+/* ==========================================================================
+   3. CELLS (Grid Content & Headers)
+   ========================================================================== */
+
+.grid-cell,
+.sum-cell {
+    @extend %flex-center;
+    width: $cell-size;
+    height: $cell-size;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Specific style for Sum Indicators (Headers) */
+.sum-cell {
+    color: white;
+    font-size: 1.1rem;
+    border: 1px solid $light;
+}
+
+/* ==========================================================================
+   4. CONTROLS (Directional Buttons)
+   ========================================================================== */
+
+// Shared styles for control buttons
+.btn-bottom,
+.btn-side {
+    @extend %flex-center;
+    padding: 0;
+
+    i {
+        transform: scale(0.8);
+    }
+}
+
+// Vertical controls
+.btn-bottom {
+    width: $cell-size !important;
+    height: $control-thickness !important;
+}
+
+// Horizontal controls
+.btn-side {
+    width: $control-thickness !important;
+    height: $cell-size !important;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE DESIGN (Mobile < 768px)
+   ========================================================================== */
+
+@include media-breakpoint-down(md) {
+    .nivat-board {
+        gap: 2px;
+    }
+
+    .grid-cell,
+    .sum-cell {
+        width: $cell-size-mobile;
+        height: $cell-size-mobile;
+        font-size: 0.9rem;
+    }
+
+    .btn-bottom {
+        width: $cell-size-mobile !important;
+        height: $control-thickness-mobile !important;
+        font-size: 12px;
+    }
+
+    .btn-side {
+        width: $control-thickness-mobile !important;
+        height: $cell-size-mobile !important;
+        font-size: 12px;
+    }
+}

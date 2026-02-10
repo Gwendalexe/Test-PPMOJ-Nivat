@@ -1,0 +1,10 @@
+site_name: Les Problèmes du Professeur Mojette
+nav:
+    - Accueil: index.md
+    - Introduction: introduction.md
+    - Configuration et Installation: configuration-installation.md
+    - Structure du Projet: structure-du-projet.md
+    - Technologies et Frameworks: technologies-frameworks.md
+    - Mojette Documentation: mojette-documentation.md
+    - Déploiement: mise-en-production.md
+

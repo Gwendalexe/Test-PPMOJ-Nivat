@@ -1,0 +1,26 @@
+{
+  "enigmes_semaine": [
+    {
+      "id": 1,
+      "nbQuestion": 10,
+      "figure": "e1.svg",
+      "nbValToFind": 3,
+      "nbItem": 3,
+      "variables": ["a","b"],
+      "liste_val": [[2,2],[3,3],[2,8],[8,8],[1,9],[4,16],[16,16],[2,18],[8,18],[17,17]],
+      "solution": [8,18,45,128,40,180,512,160,325,578],
+      "date": "2025-08-01"
+    },
+    {
+      "id": 2,
+      "nbQuestion": 2,
+      "figure": "e2.png",
+      "nbValToFind": 3,
+      "nbItem": 3,
+      "variables": ["c", "a+b"],
+      "liste_val": [[5, 7], [10, 14], [13, 17]],
+      "solution": [[3, 4], [6, 8], [5, 12]],
+      "date": "2025-08-08"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "username": "ProfesseurMojette",
+      "password": "test",
+      "email": "ProfesseurMojette@example.com",
+      "confirmation_token": "HG4EpDLFME45ProfMojette",
+      "role": "Admin",
+      "confirmed": true
+    },
+    {
+      "username": "ProfesseurMojette2",
+      "password": "test",
+      "email": "ProfesseurMojette2@example.com",
+      "confirmation_token": "2HWNE1UXL4AYZXNPTest2",
+      "role": "User",
+      "confirmed": true
+    },
+    {
+      "username": "ProfesseurAdmin",
+      "password": "admin",
+      "email": "ProfesseurAttente2@example.com",
+      "confirmation_token": "2GU2VZCOGCC74WRQTest",
+      "role": "Admin",
+      "confirmed": true
+    },
+    {
+      "username": "ProfesseurEnAttente",
+      "password": "wait",
+      "email": "Professeur3@example.com",
+      "confirmation_token": "2GGYUZEU4EZ4ZC74WRQTest",
+      "role": "Admin",
+      "confirmed": false
+    }
+  ]
+}

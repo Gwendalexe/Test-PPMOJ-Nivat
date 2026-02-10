@@ -1,0 +1,161 @@
+@use "../../../app/variables.scss";
+
+.container-fluid {
+  justify-content: center;
+  overflow-y: auto;
+  @media (max-height: 720px) {
+    justify-content: start;
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+
+}
+
+.cpt-container {
+  width: 400px;
+  max-width: 90%;
+  padding: 0;
+  z-index: 1;
+}
+
+.cpt-header {
+  border-bottom: 1px solid variables.$primary-color-l3;
+  margin: auto 5%;
+  padding: 1em 0;
+  width: auto;
+}
+
+#inventaire {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 108px;
+  min-height: 108px;
+  width: 400px;
+  max-width: 90%;
+  z-index: 0;
+  gap: 0.5em;
+  padding: 1.5em 1.5em;
+  @media (max-width: 768px) {
+    padding: 1.5em 1.5em;
+  }
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  aspect-ratio: 1/1;
+  cursor: pointer;  
+  padding: 0;
+}
+
+.inventory-tile {
+  background: variables.$accent-color-d2;
+  height: 100%;
+}
+
+.surface-tile {
+  position:absolute;
+  background: variables.$accent-color;
+}
+
+#surface {
+  border: 0px;
+  position: relative;
+  /* Important pour le positionnement absolu des tuiles */
+  box-sizing: border-box;
+  margin: 1em auto;
+  padding: 0px;
+  // overflow: hidden;
+  width: 90%;
+  --margin: 10%;
+  &.onDrag {
+    &::after {
+      display: block;
+    }
+  }
+  // &:after {
+  //   content:"";
+  //   display: none;
+  //   position: absolute;
+  //   top: calc(-1 * var(--margin));
+  //   left: calc(-1 * var(--margin));
+  //   width: calc(100% + 2 * var(--margin));
+  //   opacity: 0.8;
+  //   pointer-events: none;
+  //   border: 2px dashed variables.$danger-color;
+  //   filter: drop-shadow(2px 2px 5px black);
+  //   border-radius: 4px;
+  // }
+}
+
+#grid-span {
+  --grid-size: 0px;
+  --line-thickness: 1px;
+  position: absolute;
+  top:0;
+  left: 0;
+  overflow: hidden;
+  z-index: 50;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  box-shadow: inset 0px 0px 0px 1px white;
+  border: 0;    
+  background:  
+    conic-gradient(from 90deg at var(--line-thickness) var(--line-thickness),#ffffff00 25%,#ffffff 0)
+    0 0/var(--grid-size) var(--grid-size);
+}
+
+.drag-zone {
+  position:relative;
+  flex-grow:1;
+  // overflow: hidden;
+}
+
+.ui-draggable {
+  &.dragging, &.dropped {
+    background: green;
+    height: 50px;
+  }
+}
+
+// .cdk-drag-placeholder {
+//   opacity: 0.5;
+//   border-style: dashed;
+//   background: green;
+//   height: 25px;
+// }
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-preview {  
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+// .cdk-drag-animating {
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
+
+// .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
+
+.wrapper{
+  display:flex;
+  width:100%;
+  align-items: flex-start;
+  & > pre {
+    color: white;
+  }
+}

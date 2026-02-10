@@ -1,0 +1,194 @@
+<div class="overflow-auto m-3">
+  <a href="/backoffice">retour au backoffice</a>
+  <br />
+  <a [href]="returnToHistoire ? '/backoffice/histoire' : '/backoffice/formations'">
+    {{ returnToHistoire ? 'retour aux histoires' : 'retour aux résolutions de problème' }}
+  </a>
+  <h1>{{ formation.id === 0 ? 'Créer' : 'Modifier' }} {{ returnToHistoire ? 'une histoire' : (!showCategorySelect ? 'une résolution de problème' : 'une formation') }}</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label for="name">{{ returnToHistoire ? 'Nom de l\'histoire' : (!showCategorySelect ? 'Nom de la résolution de problème' : 'Nom de la formation') }}</label>
+    <input type="text" formControlName="name" id="name" size="80" />
+    <br />
+    <label for="description">{{ returnToHistoire ? 'Description de l\'histoire' : (!showCategorySelect ? 'Description de la résolution de problème' : 'Description de la formation') }}</label>
+    <br />
+    <textarea
+      cols="100"
+      rows="10"
+      formControlName="description"
+      id="description"></textarea>
+    <br />
+    <div *ngIf="showCategorySelect">
+      <label for="category">Catégorie</label>
+      <select formControlName="category" id="category">
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.category_name }}
+        </option>
+      </select>
+      <br />
+    </div>
+    <div *ngIf="!showCategorySelect && categories">
+      <label>Catégorie</label>
+      <div>
+        {{ getCategoryName() }}
+      </div>
+      <br />
+    </div>
+    <label for="price">Prix</label>
+    <input type="number" formControlName="price" id="price" min="0" />
+    <br />
+    <label for="document_link">URL documents supplémentaires</label>
+    <input type="text" formControlName="document_link" id="document_link" />
+    <br />
+    <label for="img_link">URL image</label>
+    <input type="text" formControlName="img_link" id="img_link" />
+    <input type="file" accept="image/*" (change)="importImage($event)" />
+    <br />
+    <img [src]="imgUrl(form.value?.['img_link'])" style="height: 100px" />
+    <br />
+    <button type="submit">
+      {{ formation.id === 0 ? '➕ Créer' : '✏️ Modifier' }}
+    </button>
+    <button type="button" (click)="onDelete()">❌ Supprimer</button>
+  </form>
+  <div *ngIf="formation.id !== 0">
+    <hr />
+    <h2>Créneaux horaires</h2>
+    <div *ngFor="let session of formation.sessions">
+      <form
+        [formGroup]="session.form"
+        (ngSubmit)="onEditSession(session, $event)">
+        <div class="d-flex flex-row justify-content-between">
+          <div>
+            <h3>
+              ✏️ Modifier session du {{ session.calculated_jour }}
+              {{ session.calculated_horaire }}
+            </h3>
+            <span *ngIf="session.delivery_date < dateNow" class="text-danger">
+              <h3>La session est passée</h3>
+            </span>
+            <label for="delivery_date">Date et Heure de début</label>
+            <input
+              type="datetime-local"
+              formControlName="delivery_date"
+              id="delivery_date" />
+            fuseau horaire :
+            {{ session.form.value?.['delivery_date'] | date: 'z' }}
+            <br />
+            <label for="duration_minutes">Durée en minutes</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="duration_minutes"
+              id="duration_minutes" />
+            <br />
+            <label for="speaker">Intevenant(s)</label>
+            <input type="text" formControlName="speaker" id="speaker" />
+            <br />
+            <label for="live_link">Lien de la visio</label>
+            <input type="text" formControlName="live_link" id="live_link" />
+            <br />
+            <label for="replay_link">Lien de la rediffusion (Dailymotion ou YouTube)</label>
+            <input
+              type="text"
+              formControlName="replay_link"
+              (input)="normalizeReplayLink($event)"
+              id="replay_link" />
+            <br />
+          </div>
+          <div>
+            <app-dailymotion-player
+              [vid]="
+                session.form.value?.['replay_link'] ?? ''
+              "></app-dailymotion-player>
+            <br />
+          </div>
+        </div>
+
+        <button type="submit">✏️ Modifier</button>
+        <button type="button" (click)="onDeleteSession(session)">
+          ❌ Supprimer
+        </button>
+        <hr />
+      </form>
+    </div>
+    <form [formGroup]="sessionForm" (ngSubmit)="onCreationSession($event)">
+      <div class="d-flex flex-row justify-content-between">
+        <div>
+          <h3>➕ Ajouter une session</h3>
+          <label for="delivery_date">Date et Heure de début</label>
+          <input
+            type="datetime-local"
+            formControlName="delivery_date"
+            id="delivery_date" />
+          fuseau horaire :
+          {{ sessionForm.value?.['delivery_date'] | date: 'z' }}
+          <br />
+          <label for="duration_minutes">Durée en minutes</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="duration_minutes"
+            id="duration_minutes" />
+          <br />
+          <label for="speaker">Intevenant(s)</label>
+          <input type="text" formControlName="speaker" id="speaker" />
+          <br />
+          <label for="live_link">Lien de la visio</label>
+          <input type="text" formControlName="live_link" id="live_link" />
+          <br />
+          <label for="replay_link">Lien de la rediffusion (Dailymotion ou YouTube)</label>
+          <input
+            type="text"
+            formControlName="replay_link"
+            (input)="normalizeReplayLink($event)"
+            id="replay_link" />
+          <br />
+        </div>
+        <div>
+          <app-dailymotion-player
+            [vid]="
+              sessionForm.value?.['replay_link'] ?? ''
+            "></app-dailymotion-player>
+        </div>
+      </div>
+      <button type="submit">➕ Ajouter</button>
+    </form>
+    <hr />
+    <h2>Achats de la formation</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="onAddUsersToFormation($event)">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+            <th>action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" formControlName="user_id" id="user_id" />
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <button type="submit">➕ Donner la formation</button>
+            </td>
+          </tr>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button (click)="removeUserFromFormation(user.id ?? 0)">
+                ❌ Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

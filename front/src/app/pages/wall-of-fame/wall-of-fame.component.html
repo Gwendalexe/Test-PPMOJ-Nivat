@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="isLoading" class="loading-container d-flex flex-column align-items-center justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+  <p class="mt-3 mb-0">Chargement du Wall Of Fame...</p>
+</div>
+
+<ng-container *ngIf="!isLoading">
+  <div class="enigme-page-container">
+    <!-- Calendar/History Section - Centered like enigme-semaine -->
+    <div class="top-section" *ngIf="enigmes?.length">
+      <div class="history-container">
+        <div class="history-strip">
+          <div
+            class="history-item"
+            *ngFor="let e of enigmes.slice(-4); let i = index"
+            [ngClass]="{ current: e.id === current?.id }"
+            (click)="selectProblem(e.id)"
+            [attr.aria-label]="'Aller à la semaine ' + getISOWeekFromString(e.date)"
+          >
+            <span class="label">Semaine</span>
+            <span class="id">{{ getISOWeekFromString(e.date) }}</span>
+          </div>
+        </div>
+        <button class="history-action" type="button" (click)="toggleWeekPicker()" aria-label="Ouvrir le calendrier des semaines">
+          <i class="bi bi-calendar3"></i>
+        </button>
+      </div>
+      <div class="week-panel card primary-card" *ngIf="showWeekPicker">
+        <div class="week-grid">
+          <button
+            *ngFor="let w of weeks"
+            type="button"
+            class="week-cell"
+            [disabled]="!w.hasProblem"
+            [ngClass]="{ 'no-problem': !w.hasProblem, 'is-current': current && weekMap[w.num]?.id === current.id }"
+            (click)="selectWeek(w.num)"
+          >
+            {{ w.num }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completions list -->
+    <div class="card primary-card completions-card" *ngIf="current">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Wall Of Fame</strong>
+          <div class="small">Enigme semaine #{{ getISOWeekFromString(current.date) }}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div *ngIf="!completions?.length" class="empty-state">
+          <p class="text-muted mb-2">Aucun joueur n'a complété cette énigme pour l'instant. <br><strong>Soyez le premier à le réussir !</strong></p>
+          <button
+            class="btn btn-primary btn-sm"
+            [routerLink]="['/enigme-semaine', current?.id]"
+            [disabled]="!current?.id">
+            Décoder cette énigme
+          </button>
+        </div>
+        <div class="wof-badges" *ngIf="completions?.length">
+          <div class="wof-badge" *ngFor="let c of completions; let i = index" [ngClass]="{ left: isLeft(i), right: !isLeft(i) }">
+            <img [src]="getBadgeSrc(i)" alt="Badge de réussite" class="wof-badge__img" />
+            <div class="wof-badge__label">{{ formatUsername(c) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

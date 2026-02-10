@@ -1,0 +1,159 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+    "name": "PPMOJPG",
+    "dockerComposeFile": "compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspace",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            // documentation: https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker
+            "version": "latest",
+            "moby": false
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            // documentation: https://github.com/devcontainers/features/tree/main/src/node
+            "version": "18"
+        },
+        "ghcr.io/devcontainers/features/python:1": {
+            // documentation: https://github.com/devcontainers/features/tree/main/src/python
+            "version": "3.11"
+        },
+        "ghcr.io/gvatsal60/dev-container-features/sonarlint": {
+            // documentation: https://github.com/gvatsal60/dev-container-features/tree/master/src/sonarlint
+        }
+    },
+    "portsAttributes": {
+        "5000": {
+            "label": "Flask API",
+            "onAutoForward": "silent"
+        },
+        "4200": {
+            "label": "Angular frontend",
+            "onAutoForward": "silent"
+        }
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // back
+                "donjayamanne.python-extension-pack",
+                "ms-python.isort",
+                "ms-python.autopep8",
+                "mgesbert.python-path",
+                "frhtylcn.pythonsnippets",
+                "ms-python.flake8",
+                "cstrap.flask-snippets",
+                "cweijan.vscode-mysql-client2",
+                // front
+                "steoates.autoimport",
+                "dbaeumer.vscode-eslint",
+                "formulahendry.auto-complete-tag",
+                "yatki.vscode-surround",
+                "shardulm94.trailing-spaces",
+                "christian-kohler.npm-intellisense",
+                "christian-kohler.path-intellisense",
+                "esbenp.prettier-vscode",
+                // doc (markdown)
+                "DavidAnson.vscode-markdownlint",
+                "bierner.github-markdown-preview",
+                // others
+                "donjayamanne.git-extension-pack",
+                "vivaxy.vscode-conventional-commits",
+                "aaron-bond.better-comments",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "IronGeek.vscode-env"
+            ],
+            "settings": {
+                "[css]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                },
+                "[html]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                },
+                "[javascript]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                },
+                "[json]": {
+                    "editor.defaultFormatter": "vscode.json-language-features"
+                },
+                "[jsonc]": {
+                    "editor.defaultFormatter": "vscode.json-language-features"
+                },
+                "[markdown]": {
+                    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+                    "editor.formatOnSave": true,
+                    "editor.indentSize": "tabSize",
+                    "editor.insertSpaces": true,
+                    "editor.quickSuggestions": {
+                        "comments": "off",
+                        "other": "off",
+                        "strings": "off"
+                    },
+                    "editor.tabSize": 2,
+                    "editor.unicodeHighlight.ambiguousCharacters": false,
+                    "editor.unicodeHighlight.invisibleCharacters": false,
+                    "emmet.excludeLanguages": [
+                        "markdown"
+                    ],
+                    "files.insertFinalNewline": true,
+                    "files.trimTrailingWhitespace": false,
+                    "markdownlint.config": {
+                        "MD024": {
+                            "siblings_only": true
+                        }
+                    }
+                },
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.autopep8",
+                    "editor.formatOnType": false,
+                    "editor.insertSpaces": true,
+                    "editor.tabSize": 2,
+                    "flake8.args": [
+                        "--max-line-length=120"
+                    ]
+                },
+                "[typescript]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode",
+                    "typescript.preferences.importModuleSpecifierEnding": "minimal",
+                    "editor.insertSpaces": true,
+                    "editor.tabSize": 2
+                },
+                "auto-close-tag.SublimeText3Mode": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.eslint": "explicit",
+                    "source.fixAll.ts": "explicit",
+                    "source.fixAll.markdownlint": "explicit",
+                    "source.fixAll.pylance": "explicit",
+                    "source.organizeImports": "explicit"
+                },
+                "editor.formatOnPaste": true,
+                "editor.formatOnSave": true,
+                "editor.formatOnSaveMode": "modificationsIfAvailable",
+                "editor.linkedEditing": true,
+                "files.associations": {
+                    "*.env": "env",
+                    ".env": "env",
+                    ".env.*": "env"
+                },
+                "files.eol": "\n",
+                "files.insertFinalNewline": true,
+                "files.trimTrailingWhitespace": true,
+                "git.autofetch": true,
+                "javascript.updateImportsOnFileMove.enabled": "always"
+            }
+        }
+    },
+    "onCreateCommand": {
+        "install requirements": [
+            ".devcontainer/install-requirements.sh"
+        ],
+        "install angular CLI globally": [
+            "npm",
+            "i",
+            "-g",
+            "@angular/cli@~19.1.8"
+        ]
+    },
+    "waitFor": "onCreateCommand"
+}

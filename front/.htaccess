@@ -1,0 +1,27 @@
+# Active le mode debug de Phusion Passenger
+PassengerAppEnv development
+PassengerFriendlyErrorPages on
+# Indique un fichier dans lequel écrire les logs
+PassengerAppLogFile "/home/ppjp9017/logs/back_log_ppmojfr/back_log_ppmojfr_app.log"
+
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} !on
+RewriteRule ^(.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+ErrorDocument 404 /index.html
+
+# --- Cache-Control ---
+<IfModule mod_headers.c>
+  # 1) Jamais de cache pour index.html
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # 2) Cache long pour les assets hashés (JS/CSS/images/fonts)
+  <FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff2?|ttf|eot|map)$">
+    Header set Cache-Control "public, max-age=2592000, immutable"
+  </FilesMatch>
+</IfModule>

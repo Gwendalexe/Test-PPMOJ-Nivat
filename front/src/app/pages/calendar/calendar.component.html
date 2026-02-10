@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<!-- affichage desktop -->
+<div class="d-none d-md-flex justify-content-center align-items-center vh-100">
+  <div class="card primary-card w-75 m-auto" style="max-height: 75%">
+    <div class="border-bottom d-flex flex-row">
+      <h1 class="header zilla-slab text-center flex-grow-1">
+        Planning des formations
+      </h1>
+    </div>
+    <div
+      class="container position-relative d-flex flex-column no-scrollbar overflox-x-hidden overflow-y-auto mh-100 w-100">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Jour</th>
+            <th scope="col">Horaire</th>
+            <th scope="col">Programme</th>
+            <th scope="col">Intervenant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of planning">
+            <td>
+              <a [href]="'/formation/' + event.id" class="btn btn-primary"
+                >visiter</a
+              >
+            </td>
+            <td>{{ event.calculated_jour }}</td>
+            <td>{{ event.calculated_horaire }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.speaker }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- affichage mobile -->
+<div class="d-md-none d-flex flex-column gap-3 overflow-y-auto">
+  <div class="border-bottom d-flex flex-row">
+    <h1 class="header zilla-slab text-center flex-grow-1 text-white">
+      Planning des formations
+    </h1>
+  </div>
+  <div *ngFor="let event of planning" class="card primary-card card-body">
+    <h2 class="card-title">{{ event.name }}</h2>
+    <p class="card-text"><strong>Jour:</strong> {{ event.calculated_jour }}</p>
+    <p class="card-text">
+      <strong>Horaire:</strong> {{ event.calculated_horaire }}
+    </p>
+    <p class="card-text"><strong>Intervenant:</strong> {{ event.speaker }}</p>
+    <a [href]="'/formation/' + event.id" class="btn btn-primary">Visiter</a>
+  </div>
+</div>

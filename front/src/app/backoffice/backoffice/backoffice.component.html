@@ -1,0 +1,30 @@
+<div class="backoffice-container">
+  <div class="backoffice-header">
+    <a routerLink="/" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Retourner sur PPMOJ
+    </a>
+    <h1 class="backoffice-title zilla-slab">Backoffice</h1>
+    <p class="backoffice-subtitle">Gestion de l'application</p>
+  </div>
+
+  <div class="modules-grid">
+    <div
+      *ngFor="let module of modules"
+      class="module-card"
+      [routerLink]="module.route"
+      routerLinkActive="active">
+      <div class="module-card-content">
+        <div class="module-icon" [style.background-color]="module.bgColor" [style.color]="module.color">
+          <i [class]="module.icon"></i>
+        </div>
+        <h2 class="module-title">{{ module.title }}</h2>
+        <p class="module-description">{{ module.description }}</p>
+        <div class="module-action">
+          <span>Accéder</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

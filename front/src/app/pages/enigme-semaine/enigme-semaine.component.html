@@ -1,0 +1,199 @@
+<app-navbar></app-navbar>
+
+<!-- Loading state -->
+<div *ngIf="isLoading" class="loading-container d-flex flex-column align-items-center justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+  <p class="mt-3 mb-0">Chargement de l'énigme...</p>
+</div>
+
+<!-- Content when loaded -->
+<ng-container *ngIf="!isLoading">
+  <div class="enigme-page-container">
+    <!-- Calendar/History Section - Above everything on desktop -->
+    <div class="top-section">
+      <div class="history-container" *ngIf="historyEnigmes?.length">
+        <div class="history-strip">
+          <div
+            class="history-item"
+            *ngFor="let h of historyEnigmes; let i = index"
+            [routerLink]="['/enigme-semaine', h.id]"
+            [ngClass]="{ current: h.id === enigme?.id, done: completedWeekIds.has(h.id) }"
+            [attr.aria-label]="'Aller à la semaine ' + getISOWeekFromString(h.date)"
+          >
+            <span class="label">Semaine</span>
+            <span class="id">
+              {{ getISOWeekFromString(h.date) }}
+            </span>
+          </div>
+        </div>
+        <button class="history-action" type="button" (click)="toggleWeekPicker()" aria-label="Ouvrir le calendrier des semaines">
+          <i class="bi bi-calendar3"></i>
+        </button>
+        <button
+          class="history-action trophy-action"
+          type="button"
+          [routerLink]="['/wall-of-fame', enigme?.id]"
+          [disabled]="!enigme?.id"
+          aria-label="Ouvrir le Wall Of Fame de cette énigme">
+          <i class="bi bi-trophy"></i>
+        </button>
+      </div>
+      <div class="week-panel card primary-card" *ngIf="showWeekPicker">
+        <div class="week-grid">
+          <button
+            *ngFor="let w of weeks"
+            type="button"
+            class="week-cell"
+            [disabled]="!w.hasProblem"
+            [ngClass]="{ 'no-problem': !w.hasProblem, 'is-current': enigme && weekMap[w.num]?.id === enigme.id, 'completed': w.id && completedWeekIds.has(w.id) }"
+            (click)="selectWeek(w.num)"
+          >
+            {{ w.num }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content - Two columns on desktop -->
+    <div class="main-content">
+      <!-- Left Column: Problem -->
+      <div class="left-column">
+        <div class="enigme-card card primary-card">
+          <div class="infos-container card-header justify-content-between">
+            <div class="container justify-content-start">
+              <span>Enigme de la semaine #{{getISOWeekFromString(this.enigme?.date)}}<br> Semaine du {{this.dateString}}</span>
+            </div>
+            <div class="container d-flex align-items-center gap-3 reward-section" *ngIf="enigme && ((enigme.reward_mojette ?? 0) > 0 || (enigme.reward_token_coin ?? 0) > 0)">
+              <span class="reward-label">Récompense :</span>
+              <div class="d-flex align-items-center" *ngIf="(enigme.reward_mojette ?? 0) > 0" title="Mojettes à gagner">
+                <img src="assets/beans.svg" alt="Mojettes" class="reward-icon">
+                <span>{{ enigme.reward_mojette }}</span>
+              </div>
+              <div class="d-flex align-items-center" *ngIf="(enigme.reward_token_coin ?? 0) > 0" title="Jetons à gagner">
+                <img src="assets/boutique/formations/formation_unique_resized.png" alt="Tokens" class="reward-icon">
+                <span>{{ enigme.reward_token_coin }}</span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="enigme && enigme.figure_path" class="enigme-image">
+            <img
+              [src]="getFigureUrl(enigme.figure_path)"
+              alt="Illustration de l'énigme"
+              class="image-clickable"
+              (click)="openImageModal(getFigureUrl(enigme.figure_path))" />
+          </div>
+          <div *ngIf="enigme && enigme.problem_statement" class="enigme-statement mt-3">
+            <p><strong>Énoncé : </strong>{{ enigme.problem_statement }}</p>
+          </div>
+          <div *ngIf="enigme && enigme.problem_question" class="enigme-question mt-2">
+            <p><strong>Question : </strong>{{ enigme.problem_question }}</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons - Under the problem -->
+        <div class="action-buttons">
+          <button class="btn btn-primary btn-sm" (click)="shareImage()">
+            Partager
+          </button>
+          <select class="btn btn-primary btn-sm" (change)="onFormatSelect($event)">
+            <option value="">Télécharger</option>
+            <option *ngFor="let f of formats" [value]="f.width + 'x' + f.height + '|' + f.format">
+              {{ f.name }}
+            </option>
+          </select>
+          <button class="btn btn-secondary btn-sm" (click)="goToHomePage()">
+            Retour
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Answer Block -->
+      <div class="right-column">
+        <div class="enigme-card card primary-card p-2">
+          <div class="form-container mt-2" *ngIf="!allValid">
+            <form [formGroup]="form" id="formProblem" (ngSubmit)="onSubmit()">
+              <ng-container *ngFor="let i of indicesAVerifier; let idx = index">
+                <div class="mb-3">
+                  <ng-container *ngIf="enigme && enigme.variables && enigme.variables.length > 0" >
+                    <label>
+                      <div>
+                        Pour
+                        <ng-container *ngFor="let varName of enigme.variables; let j = index">
+                          {{ varName }} = {{ enigme.values_list[i][j] }}
+                          <ng-container *ngIf="j < enigme.variables.length - 1"> et </ng-container>
+                        </ng-container>
+                      </div>
+                    </label>
+                    <br>
+                  </ng-container>
+                  <mat-form-field
+                    class="problem-form-field"
+                    appearance="outline">
+                    <input
+                      matInput
+                      formControlName="question{{ i }}"
+                      name="value-{{ i }}-input"
+                      id="value-{{ i }}-input"
+                      type="number"/>
+                  </mat-form-field>
+                  <mat-error *ngIf="form.get('question' + i)?.hasError('required') && form.get('question' + i)?.touched">
+                    Champ requis
+                  </mat-error>
+                  <mat-error *ngIf="!form.get('question' + i)?.hasError('required') && validInputs && !validInputs[idx] && form.get('question' + i)?.touched">
+                    Mauvaise réponse
+                  </mat-error>
+                </div>
+              </ng-container>
+
+              <div class="d-flex align-items-center gap-2">
+                <button *ngIf="!allValid" class="btn btn-primary btn-sm" form="formProblem" type="submit">
+                  Répondre
+                </button>
+                <small *ngIf="isCompletedCurrent" class="text-white fst-italic">
+                  Déjà terminé : aucune récompense supplémentaire ne sera attribuée
+                </small>
+              </div>
+            </form>
+          </div>
+          <ng-container *ngIf="allValid">
+            <h2 class="text-center">Félicitations !</h2>
+            <div class="d-flex flex-column mb-1">
+              <span class="text-center">Vous avez résolu cette énigme !</span>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+              <button
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/wall-of-fame', enigme?.id]"
+                [disabled]="!enigme?.id">
+                Voir le Wall Of Fame
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isImageModalOpen"
+    class="image-lightbox"
+    role="dialog"
+    aria-label="Agrandir l'image de l'énigme"
+    (click)="closeImageModal()">
+    <img
+      [src]="modalImageSrc"
+      class="image-lightbox__img"
+      [class.is-zoomed]="isImageZoomed"
+      alt="Image de l'énigme agrandie"
+      (click)="toggleImageZoom($event)" />
+    <button
+      type="button"
+      class="image-lightbox__close"
+      aria-label="Fermer l'aperçu"
+      (click)="closeImageModal(); $event.stopPropagation(); $event.preventDefault()">
+      X
+    </button>
+  </div>
+</ng-container>

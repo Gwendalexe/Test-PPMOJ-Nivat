@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid flex-column flex-grow-1 page-scroll no-scrollbar">
+  <app-leaderboard-table [gridId]="gridId"></app-leaderboard-table>
+
+  <div class="btn-container d-flex flex-row justify-content-center">
+    <button (click)="goToGridBrowse()" class="btn btn-secondary btn-sm">
+      Retour aux grilles
+    </button>
+  </div>
+</div>

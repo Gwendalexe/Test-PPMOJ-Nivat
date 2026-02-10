@@ -1,0 +1,236 @@
+@use "../../_variables.scss" as variables;
+
+.backoffice-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.backoffice-header {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    color: var(--accent-color);
+    transform: translateX(-4px);
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.backoffice-title {
+  font-size: 3rem;
+  margin: 0.5rem 0;
+  color: var(--secondary-color);
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.backoffice-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  margin: 0;
+  color: var(--secondary-color);
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.module-card {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), color-mix(in srgb, var(--accent-color) 80%, transparent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-elevated);
+    border-color: var(--accent-color);
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .module-action {
+      transform: translateX(4px);
+      color: var(--accent-color);
+    }
+
+    .module-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+
+  &:active {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-pressed);
+  }
+
+  &.active {
+    border-color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 10%, var(--card-background));
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.module-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.module-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+
+  i {
+    font-size: 2.5rem;
+    transition: all 0.3s ease;
+    color: inherit;
+  }
+
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 70px;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+.module-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--secondary-color);
+  font-family: "Zilla Slab", serif;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+}
+
+.module-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin: 0;
+  color: var(--secondary-color);
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
+.module-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+
+  i {
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+

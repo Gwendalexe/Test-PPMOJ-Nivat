@@ -1,0 +1,18 @@
+<h1 class="zilla-slab">{{ card.title }}</h1>
+<p>
+  {{ card.description }}
+</p>
+<button
+  *ngIf="isConnected && isConfirmed"
+  (click)="goToDestination()"
+  class="btn btn-primary btn-sm btn-elevated d-block d-md-none">
+  JOUER
+</button>
+<span *ngIf="!isConnected" class="danger-text d-block text-center"
+  >Connexion requise</span
+>
+<span
+  *ngIf="isConnected && !isConfirmed"
+  class="danger-text d-block text-center"
+  >Confirmation requise</span
+>

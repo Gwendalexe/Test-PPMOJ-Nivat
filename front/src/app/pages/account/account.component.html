@@ -1,0 +1,345 @@
+<app-navbar></app-navbar>
+
+<!-- <dialog #accountDialog id="accountDialog" class="dialog-container no-scrollbar" style="overflow: auto;">
+  <div class="modal-header">
+    <h2 class="modal-title">Confirmation d'opération</h2>
+    <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Un email vous a été envoyé pour confirmer votre opération.</p>
+    <h5>Vérifiez votre dossier spam au cas où vous ne trouveriez pas l'e-mail de confirmation dans
+      votre boîte de réception principale.</h5>
+    <h5>Vous pourrez réitérer l'opération dans 2 minutes.</h5>
+  </div>
+</dialog> -->
+
+<div class="card primary-card account-card">
+  <div
+    class="btn-group-vertical card-tab-header d-flex flex-row"
+    role="group"
+    aria-label="Vertical radio toggle button group">
+    <input
+      type="radio"
+      class="btn-check"
+      name="vbtn-radio"
+      id="vbtn-radio1"
+      autocomplete="off"
+      checked />
+    <label
+      class="btn btn-outline-danger btn-tab-label"
+      for="vbtn-radio1"
+      (click)="setCurrentTab(0)"
+      >Modification</label
+    >
+    <input
+      type="radio"
+      class="btn-check"
+      name="vbtn-radio"
+      id="vbtn-radio2"
+      autocomplete="off" />
+    <label
+      class="btn btn-outline-danger btn-tab-label"
+      for="vbtn-radio2"
+      (click)="setCurrentTab(1)"
+      >Progression</label
+    >
+    <input
+      *ngIf="isadmin"
+      type="radio"
+      class="btn-check"
+      name="vbtn-radio"
+      id="vbtn-radio3"
+      autocomplete="off" />
+    <label
+      *ngIf="isadmin"
+      class="btn btn-outline-danger btn-tab-label"
+      for="vbtn-radio3"
+      (click)="setCurrentTab(2)"
+      >Admin</label
+    >
+  </div>
+  <div
+    class="account-card-content container position-relative d-flex flex-column no-scrollbar">
+    <form
+      *ngIf="currentTab === 0"
+      id="formInfo"
+      class="edit-account-form"
+      [formGroup]="form"
+      (ngSubmit)="sendUpdateForm()">
+      <button
+        type="button"
+        class="btn btn-icon square btn-sm edit-btn position-absolute"
+        (click)="toggleEditionMode()">
+        <i class="bi bi-pen"></i>
+      </button>
+
+      <div class="form-field username d-flex flex-column">
+        <label class="btn form-label" for="newUsername-input">Pseudo :</label>
+        <span *ngIf="!isEditing">{{ username }}</span>
+        <mat-form-field
+          class="register-form-field"
+          appearance="outline"
+          *ngIf="isEditing">
+          <input
+            matInput
+            [formControl]="getField('newUsername')"
+            placeholder="Nom d'utilisateur"
+            name="newUsername-input"
+            type="text" />
+            <mat-error *ngIf="getField('newUsername').errors?.['alreadyUsed']">
+              Ce nom d'utilisateur est déjà utilisé.
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-field email d-flex flex-column">
+        <label class="btn form-label" for="newEmail-input">E-Mail :</label>
+        <span *ngIf="!isEditing">{{ email }}</span>
+        <mat-form-field
+          class="register-form-field"
+          appearance="outline"
+          *ngIf="isEditing">
+          <input
+            matInput
+            [formControl]="getField('newEmail')"
+            placeholder="Email"
+            name="newEmail-input"
+            type="email" />
+            <mat-error *ngIf="getField('newEmail').errors?.['alreadyUsed']">
+              Cet e-mail est déjà utilisé.
+            </mat-error>
+            <mat-error *ngIf="getField('newEmail').errors?.['email']">
+              L'e-mail n'est pas valide.
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="form-field currentPasswordConfirm d-flex flex-column"
+        *ngIf="isEditing">
+        <label class="btn form-label" for="currentPassword-input"
+          >Mot de passe actuel :</label
+        >
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            [formControl]="getField('currentPassword')"
+            placeholder="Mot de passe"
+            name="currentPassword-input"
+            type="password"
+            required />
+          <mat-error *ngIf="getField('currentPassword').errors?.['required']"
+            >Le mot de passe est requis.</mat-error
+          >
+          <mat-error *ngIf="getField('currentPassword').errors?.['incorrect']">
+            Le mot de passe actuel est incorrect.
+          </mat-error>
+          <mat-error *ngIf="getField('currentPassword').errors?.['minlength']">
+            Le mot de passe est trop court (6 min).
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-field newPassword d-flex flex-column" *ngIf="isEditing">
+        <label class="btn form-label" for="newPassword-input"
+          >Nouveau mot de passe :</label
+        >
+        <mat-form-field class="register-form-field" appearance="outline">
+          <input
+            matInput
+            [formControl]="getField('newPassword')"
+            placeholder="Mot de passe"
+            name="newPassword-input"
+            type="password" />
+            <mat-error *ngIf="getField('newPassword').errors?.['minlength']">
+              Le mot de passe est trop court (6 min).
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- RGPD Buttons -->
+      <div class="rgpd-buttons d-flex justify-content-between align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="downloadUserData()"
+          [disabled]="isDownloadingData"
+          title="Télécharger toutes vos données">
+          <i class="bi bi-download"></i> Télécharger mes données
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
+          (click)="requestDeleteAccount()"
+          title="Supprimer définitivement votre compte">
+          <i class="bi bi-trash"></i> Supprimer mon compte
+        </button>
+      </div>
+
+      <!-- Download Status Message -->
+      <div
+        *ngIf="downloadMessage"
+        class="download-message"
+        [ngClass]="{'message-success': downloadMessageType === 'success', 'message-error': downloadMessageType === 'error'}">
+        <div *ngIf="isDownloadingData" class="spinner-border spinner-border-sm me-2" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        {{ downloadMessage }}
+      </div>
+
+      <!-- Delete Account Confirmation Modal -->
+      <div *ngIf="showDeleteConfirmation" class="delete-confirmation-overlay">
+        <div class="delete-confirmation-modal">
+          <div class="modal-header">
+            <h5 class="modal-title">Supprimer votre compte</h5>
+            <button type="button" class="btn-close" (click)="cancelDeleteAccount()" [disabled]="isDeletingAccount"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              <strong>Attention:</strong> Cette action est irréversible!
+            </div>
+            <br />
+            <p>Si vous supprimez votre compte:</p>
+            <ul>
+              <li>Votre nom d'utilisateur et email seront anonymisés</li>
+              <li>Toutes vos données personnelles seront conservées à titre archivé</li>
+              <li>Vous ne pourrez pas vous connecter avec ce compte</li>
+            </ul>
+            <p class="mt-3">
+              <strong>Êtes-vous vraiment sûr de vouloir continuer?</strong>
+            </p>
+            <div class="form-check mt-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="deleteConfirmCheckbox"
+                [checked]="deleteConfirmed"
+                (change)="deleteConfirmed = $any($event.target).checked"
+                [disabled]="isDeletingAccount" />
+              <label class="form-check-label" for="deleteConfirmCheckbox">
+                Oui, je suis sûr de vouloir supprimer mon compte
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="cancelDeleteAccount()"
+              [disabled]="isDeletingAccount">
+              Annuler
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="confirmDeleteAccount()"
+              [disabled]="isDeletingAccount || deleteConfirmed === false">
+              <span *ngIf="isDeletingAccount" class="spinner-border spinner-border-sm me-2" role="status">
+                <span class="visually-hidden">Chargement...</span>
+              </span>
+              Je comprends, supprimer mon compte
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Status Message -->
+      <div
+        *ngIf="deleteMessage"
+        class="delete-message"
+        [ngClass]="{'message-success': deleteMessageType === 'success', 'message-error': deleteMessageType === 'error'}">
+        <div *ngIf="isDeletingAccount" class="spinner-border spinner-border-sm me-2" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        {{ deleteMessage }}
+      </div>
+    </form>
+
+    <div
+      class="card-footer button-container d-flex justify-content-between"
+      *ngIf="currentTab === 0 && isEditing">
+      <!-- Boutons de déconnexion et de suppression du compte -->
+      <button
+        class="btn btn-primary btn-sm"
+        form="formInfo"
+        type="submit"
+        [disabled]="!isEditing">
+        Valider
+      </button>
+      <button class="btn btn-danger btm-sm" disabled data-bs-toggle="dropdown">
+        Supprimer votre compte
+      </button>
+      <!-- <ul class="dropdown-menu animate slideIn delete-account">
+        <h2>Voulez-vous vraiment supprimer votre compte ?</h2>
+        <div class="ButtonConfirmation">
+          <li class="text-center">
+            <div class="ButtonConfirmation">
+              <button class="btn btn-primary mr-2" (click)="deleteAccount()">Oui</button>
+              <button class="btn btn-secondary">Non</button>
+            </div>
+          </li>
+        </div>
+      </ul> -->
+    </div>
+    <div
+      class="informations-account d-flex flex-column"
+      *ngIf="currentTab === 1">
+      <div class="informations-container d-flex flex-column">
+        <span class="title zilla-slab">Informations : </span>
+        <div class="mojette-info d-flex flex-row align-items-center">
+          <img
+            class="svg-img"
+            src="../../../assets/beans.svg"
+            alt="Mojette SVG" />
+          <span class="text">Mojettes : {{ mojettes }}</span>
+          <button class="btn btn-text btn-sm" disabled>Obtenir plus</button>
+        </div>
+      </div>
+      <br />
+      <div class="informations-container d-flex flex-column">
+        <span class="title zilla-slab">Tour de France :</span>
+        <ul class="list-unstyled">
+          <li>Problèmes résolus (maths) : {{ nbM }}</li>
+          <li>Problèmes résolus (informatique) : {{ nbI }}</li>
+          <li>Défis de région : {{ nbR }}</li>
+        </ul>
+      </div>
+
+      <div class="informations-container d-flex flex-column">
+        <span class="title zilla-slab">Jeu Mojette :</span>
+        <ul class="list-unstyled">
+          <li>Nombre de grilles résolue : {{ nbMojetteSolved }}</li>
+          <li>Meilleur Temps : {{ pbMojette }}</li>
+        </ul>
+      </div>
+
+      <div class="informations-container d-flex flex-column">
+        <span class="title zilla-slab">Carré par Terre :</span>
+        <ul class="list-unstyled">
+          <li>Nombre de Carré par Terre résolus : {{ nbCarresSolved }}</li>
+          <li>Meilleur Temps : {{ pbCarre }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="admin-panel" *ngIf="currentTab === 2">
+      <h2 class="Progression">Panel Administrateur</h2>
+      <ul class="list-unstyled text-center flex flex-row">
+        <div class="button">
+          <a href="/backoffice" class="btn btn-text btn-sm btn-primary">
+            <span>accès backoffice</span>
+          </a>
+        </div>
+        <!-- <div class="button">
+          <a href="/createPb" class="btn mojette-btn">
+            <span>Créer ou modifier PB_TDF</span>
+          </a>
+        </div>
+        <div class="button">
+          <a href="/AjoutIlu" class="btn mojette-btn">
+            <span>Ajouter des Régions</span>
+          </a>
+        </div> -->
+      </ul>
+    </div>
+  </div>
+</div>

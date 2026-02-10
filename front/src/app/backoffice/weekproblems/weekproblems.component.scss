@@ -1,0 +1,392 @@
+@use "../../_variables.scss" as variables;
+
+.backoffice-page-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.backoffice-header {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    color: var(--accent-color);
+    transform: translateX(-4px);
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--secondary-color);
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.alerts-container {
+  max-width: 1400px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  &.alert-error {
+    background: color-mix(in srgb, variables.$danger-color 20%, transparent);
+    border: 1px solid variables.$danger-color;
+    color: variables.$danger-color;
+  }
+
+  &.alert-success {
+    background: color-mix(in srgb, variables.$success-color 20%, transparent);
+    border: 1px solid variables.$success-color;
+    color: variables.$success-color;
+  }
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.actions-bar {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.weekproblems-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.weekproblems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
+
+.weekproblem-card {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-elevated);
+    border-color: var(--accent-color);
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.weekproblem-id {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  font-family: "Zilla Slab", serif;
+}
+
+.weekproblem-status {
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    &.displayed {
+      background: color-mix(in srgb, variables.$success-color 20%, transparent);
+      border: 1px solid variables.$success-color;
+      color: variables.$success-color;
+    }
+
+    &.hidden {
+      background: color-mix(in srgb, variables.$lightgrey 20%, transparent);
+      border: 1px solid variables.$lightgrey;
+      color: variables.$lightgrey;
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  i {
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+  }
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+
+  label {
+    font-size: 0.75rem;
+    color: variables.$lightgrey;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  span {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    word-break: break-word;
+  }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.number-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--accent-color);
+  font-size: 0.9rem;
+}
+
+.variables-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.variable-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background: color-mix(in srgb, variables.$progress-color 20%, transparent);
+  border: 1px solid variables.$progress-color;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: variables.$progress-color;
+  font-family: monospace;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--secondary-color);
+  font-family: "Work Sans", sans-serif;
+
+  &.edit {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+
+    &:hover {
+      background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.toggle {
+    color: variables.$lightgrey;
+    border-color: variables.$lightgrey;
+
+    &:hover {
+      background: color-mix(in srgb, variables.$lightgrey 20%, transparent);
+      transform: translateY(-2px);
+    }
+
+    &.active {
+      color: variables.$success-color;
+      border-color: variables.$success-color;
+
+      &:hover {
+        background: color-mix(in srgb, variables.$success-color 20%, transparent);
+      }
+    }
+  }
+
+  &.delete {
+    color: variables.$danger-color;
+    border-color: variables.$danger-color;
+
+    &:hover {
+      background: color-mix(in srgb, variables.$danger-color 20%, transparent);
+      transform: translateY(-2px);
+    }
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.empty-state {
+  max-width: 500px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+
+  i {
+    font-size: 4rem;
+    color: variables.$lightgrey;
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+    color: var(--secondary-color);
+    font-family: "Zilla Slab", serif;
+  }
+
+  p {
+    color: variables.$lightgrey;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.loading-state {
+  max-width: 500px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 3rem 2rem;
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1.5rem;
+    border: 4px solid var(--card-border);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    color: variables.$lightgrey;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

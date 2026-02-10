@@ -1,0 +1,182 @@
+<div class="backoffice-page-container">
+  <div class="backoffice-header">
+    <a routerLink="/backoffice" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Retour au backoffice
+    </a>
+    <h1 class="page-title zilla-slab">Gestion des Résolutions de problème</h1>
+  </div>
+
+  <div class="categories-container">
+    <div *ngFor="let category of categories | keyvalue" class="category-section">
+      <!-- Category Info Card -->
+      <div class="category-info-card">
+        <div class="card-header">
+          <div class="category-id">
+            <i class="bi bi-folder-fill"></i>
+            Catégorie #{{ category.value.category.id }}
+          </div>
+          <div class="category-status">
+            <span class="status-badge active">
+              <i class="bi bi-check-circle-fill"></i>
+              Active
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="info-row">
+            <div class="info-item">
+              <i class="bi bi-tag"></i>
+              <div class="info-content">
+                <label>Nom de catégorie</label>
+                <span>{{ category.value.category.category_name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-item">
+              <i class="bi bi-code-slash"></i>
+              <div class="info-content">
+                <label>Code catégorie</label>
+                <span class="code-badge">{{ category.value.category.code }}</span>
+                <span class="warning-text">⚠️ Donnée sensible</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row" *ngIf="category.value.category.category_description">
+            <div class="info-item">
+              <i class="bi bi-file-text"></i>
+              <div class="info-content">
+                <label>Description</label>
+                <span class="description-text">{{ category.value.category.category_description }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Edit Form Card -->
+      <div class="category-edit-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="bi bi-pencil-square"></i>
+            Modifier la catégorie
+          </h3>
+        </div>
+
+        <div class="card-content">
+          <form
+            [formGroup]="category.value.form"
+            (ngSubmit)="onSubmit(category.value.category.id, category.value.form)"
+            class="edit-category-form">
+
+            <div class="form-group">
+              <label for="category_name_{{category.value.category.id}}">
+                <i class="bi bi-tag"></i>
+                Nom de catégorie
+              </label>
+              <input
+                type="text"
+                formControlName="category_name"
+                id="category_name_{{category.value.category.id}}"
+                class="form-input"
+                placeholder="Nom de la catégorie" />
+            </div>
+
+            <div class="form-group">
+              <label for="code_{{category.value.category.id}}">
+                <i class="bi bi-code-slash"></i>
+                Code catégorie
+                <span class="warning-badge">⚠️ Donnée sensible</span>
+              </label>
+              <input
+                type="text"
+                formControlName="code"
+                id="code_{{category.value.category.id}}"
+                class="form-input"
+                placeholder="Code de la catégorie" />
+            </div>
+
+            <div class="form-group">
+              <label for="category_description_{{category.value.category.id}}">
+                <i class="bi bi-file-text"></i>
+                Description de catégorie
+              </label>
+              <textarea
+                formControlName="category_description"
+                id="category_description_{{category.value.category.id}}"
+                class="form-textarea"
+                rows="6"
+                placeholder="Description de la catégorie"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-elevated">
+              <i class="bi bi-check-circle"></i>
+              Enregistrer les modifications
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Formations List Card -->
+      <div class="formations-list-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="bi bi-book"></i>
+            Formations ({{ category.value.formations.length }})
+          </h3>
+        </div>
+
+        <div class="card-content">
+          <div class="formations-grid">
+            <div
+              *ngFor="let formation of category.value.formations"
+              class="formation-card">
+              <div class="formation-image" *ngIf="formation.img_link">
+                <img [src]="imgUrl(formation.img_link)" [alt]="formation.name" />
+              </div>
+              <div class="formation-content">
+                <h4 class="formation-name">{{ formation.name }}</h4>
+                <div class="formation-status">
+                  <span class="status-badge" [class.displayed]="formation.displayed" [class.hidden]="!formation.displayed">
+                    <i [class]="formation.displayed ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
+                    {{formation.displayed ? 'Affichée' : 'Masquée'}}
+                  </span>
+                </div>
+                <div class="formation-actions">
+                  <a [routerLink]="['/backoffice/formation', formation.id]" class="btn-action edit">
+                    <i class="bi bi-pencil"></i>
+                    Modifier
+                  </a>
+                  <button
+                    (click)="onToggleDisplay(formation)"
+                    class="btn-action toggle"
+                    [class.active]="formation.displayed">
+                    <i [class]="formation.displayed ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    {{ formation.displayed ? 'Masquer' : 'Afficher' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="formation-card new-formation-card">
+              <div class="new-formation-content">
+                <i class="bi bi-plus-circle"></i>
+                <h4>Nouvelle Résolution de problème</h4>
+                <a
+                  [routerLink]="['/backoffice/formation/0']"
+                  [queryParams]="{cat: category.value.category.id, source: 'probleme'}"
+                  class="btn btn-primary btn-elevated">
+                  Créer une résolution de problème
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

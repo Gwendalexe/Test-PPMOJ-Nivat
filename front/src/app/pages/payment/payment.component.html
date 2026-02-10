@@ -1,0 +1,114 @@
+<app-navbar (onOpenDialog)="openDialog()"></app-navbar>
+
+<!-- Loading Screen -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+    <p class="loading-text">Chargement de la boutique...</p>
+  </div>
+</div>
+
+<div class="boutique-container" [class.content-hidden]="isLoading">
+  <div class="title-container d-flex flex-row justify-content-center align-items-center">
+    <h1 class="home-title zilla-slab">Boutique</h1>
+  </div>
+
+  <div class="w-100 d-flex flex-row justify-content-center mb-4">
+    <a class="btn btn-primary" href="/cart"> Voir le panier </a>
+  </div>
+
+  <!-- Mojettes Section -->
+  <section class="mojettes-section">
+    <div class="section-header">
+      <div class="decorative-separator"></div>
+      <h2 class="section-title">Mojettes</h2>
+      <p class="section-description">
+        Gagner des mojettes en jouant aux jeux. Utiliser vos mojettes pour obtenir de l'aide dans les jeux, ou pour obtenir des réductions à l'achat de vos jetons de formations.
+      </p>
+    </div>
+
+    <div class="items-grid mojettes-grid">
+      <div
+        *ngFor="let mojette of mojettes"
+        class="item-card mojette-card">
+        <div class="item-quantity">{{ mojette.mojette }} MOJETTES</div>
+        <div class="item-illustration">
+          <img
+            #illustrationImg
+            [src]="getMojetteAsset(mojette.mojette)"
+            [alt]="mojette.mojette + ' Mojettes'"
+            class="illustration-img" />
+        </div>
+        <div class="item-footer">
+          <span class="item-price">{{ mojette.price }}€</span>
+          <button
+            (click)="addtocart(mojette.id)"
+            class="add-button"
+            aria-label="Ajouter au panier">
+            <span class="material-symbols-outlined">add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Decorative Separator -->
+  <div class="category-separator">
+    <div class="separator-line"></div>
+    <div class="separator-ornament"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Formations Section -->
+  <section class="formations-section">
+    <div class="section-header">
+      <h2 class="section-title">Jetons de formations</h2>
+      <p class="section-description">
+        Utiliser les jetons de formations pour accéder aux formations lives et aux replays
+      </p>
+      <p class="section-subtitle">"Histoire" et "Résolution de problème"</p>
+    </div>
+
+    <div class="items-grid formations-grid">
+      <div
+        *ngFor="let tokenPair of tokens"
+        class="item-card formation-card">
+        <div class="item-quantity">{{ tokenPair[0].token }} JETONS</div>
+        <div class="item-illustration">
+          <img
+            #illustrationImg
+            [src]="getFormationAsset(tokenPair[0].token)"
+            [alt]="tokenPair[0].token + ' Jetons'"
+            class="illustration-img" />
+        </div>
+        <div class="item-pricing-options">
+          <div class="pricing-option">
+            <span class="item-price">{{ tokenPair[0].price }}€</span>
+            <button
+              (click)="addtocart(tokenPair[0].id)"
+              class="add-button"
+              aria-label="Ajouter au panier">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+          <div class="pricing-option promo-option">
+            <span class="promo-label">ou</span>
+            <span class="item-price">{{ tokenPair[1].price }}€</span>
+            <span class="plus-sign">+</span>
+            <span class="mojette-amount">{{ tokenPair[1].promoMojetteAmount }}</span>
+            <img
+              src="assets/boutique/formations/formation_beans.png"
+              alt="Mojette"
+              class="mojette-icon" />
+            <button
+              (click)="addtocart(tokenPair[1].id)"
+              class="add-button"
+              aria-label="Ajouter au panier">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

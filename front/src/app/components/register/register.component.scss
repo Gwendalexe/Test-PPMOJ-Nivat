@@ -1,0 +1,49 @@
+@use "../../../app/variables.scss";
+
+form > mat-error {
+  margin-top: -0.5em!important;
+  margin-bottom: 0.5em!important;
+}
+
+.lostpassword {
+  color: variables.$secondary-color;
+  margin: 0.5em 4px 0;
+  width: fit-content;
+  align-self: end;
+  &:hover {
+    color: color-mix(in srgb, variables.$secondary-color 30%, variables.$danger-color 70%);
+  }
+}
+
+.modal-actions {
+  margin-top: 1em;
+}
+
+.modal-btn {
+  width: 150px;
+  color: green;
+}
+
+.register-form-field {
+  width: 100%;
+  position: relative;
+  padding: 0 0 1.5em 0;
+  margin: 0;
+  @media(max-width: 768px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+mat-icon {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+form > mat-error {
+  margin-top: -0.5em!important;
+  margin-bottom: 0.5em!important;
+}

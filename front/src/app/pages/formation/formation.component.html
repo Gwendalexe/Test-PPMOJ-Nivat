@@ -1,0 +1,136 @@
+<app-navbar></app-navbar>
+
+<div
+  *ngIf="formation !== null"
+  class="container-fluid home-container d-flex flex-column align-items-center overflow-auto">
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <h1 class="home-title zilla-slab">
+      Formation <br />
+      {{ formation.name }}
+    </h1>
+  </div>
+
+  <div class="row w-100 h-100">
+    <div
+      style="height: 80%"
+      class="col-md-6 d-flex no-scrollbar md-p-5 mt-5 my-md-2">
+      <div class="card primary-card p-2 w-100 h-full">
+        <h2 class="mx-auto">
+          {{ formation.name }}
+        </h2>
+        {{ formation.description }}
+        <img
+          *ngIf="formation.img_link"
+          [src]="imgUrl(formation.img_link)"
+          style="width: auto; max-width: 100%; max-height: 50vh"
+          alt="Illustration de la formation {{ formation.name }}"
+          class="rounded mx-auto d-block h-50 my-auto image-clickable"
+          (click)="openImageModal(imgUrl(formation.img_link))" />
+        <a
+          *ngIf="formation.document_link"
+          class="btn btn-primary"
+          [href]="formation.document_link"
+          target="_blank">
+          <span
+            class="material-icons"
+            style="vertical-align: bottom; font-size: 18px !important"
+            >download</span
+          >
+          documents à télécharger
+        </a>
+      </div>
+    </div>
+
+    <div
+      style="height: 80%"
+      class="col-md-6 d-flex flex-column no-scrollbar md-p-5 mt-5 my-md-2">
+      <div
+        *ngIf="!formation.owned"
+        class="card primary-card d-flex no-scrollbar mb-4">
+        <h2 class="mx-auto">Acheter la formation</h2>
+        <button (click)="buyformation()" class="btn btn-primary mx-auto my-2">
+          Cout : {{ formation.price }}
+          <span
+            class="material-symbols-outlined"
+            style="vertical-align: bottom; font-size: 18px !important"
+            >poker_chip</span
+          >
+        </button>
+        <h3 class="mx-auto">
+          pas assez de jetons ? <a href="/boutique">acheter des jetons</a>
+        </h3>
+      </div>
+      <div class="d-flex card primary-card overflow-auto mh-100">
+        <h2 class="mx-auto">Sessions de formation</h2>
+        <div class="p-2">
+          Ce cours peut avoir eu lieu à plusieurs reprises, voici les dates des
+          sessions passées et à venir :
+          <br />
+          Si vous avez acheté la formation, vous pouvez revoir l'enregistrement des sessions précédentes.
+        </div>
+        <div *ngIf="formation.sessions" class="p-2">
+          <div *ngFor="let session of formation.sessions">
+            <hr />
+            <div class="d-flex flex-column">
+              <h2>
+                Session du {{ session.calculated_jour }} -
+                {{ session.calculated_horaire }}
+              </h2>
+              <div
+                *ngIf="
+                  formation.owned && session.live_link && !session.replay_link
+                "
+                class="mx-auto">
+                <a [href]="session.live_link" class="btn btn-primary"
+                  >Rejoindre la session en direct</a
+                >
+              </div>
+              <div *ngIf="session.replay_link">
+                <h4>Rediffusion de la séance</h4>
+                <app-dailymotion-player
+                  [vid]="session.replay_link"></app-dailymotion-player>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!formation.sessions">
+          <hr />
+          <p class="mx-auto">Aucune sessions programmée pour l'instant</p>
+        </div>
+      </div>
+      <div
+        *ngIf="formation.owned && formation.sessions[0].replay_link"
+        class="card-container d-flex no-scrollbar"></div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="formation === null"
+  class="container-fluid home-container d-flex flex-column align-items-center">
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <h1 class="home-title zilla-slab">Formation non trouvée</h1>
+  </div>
+</div>
+
+<div
+  *ngIf="isImageModalOpen"
+  class="image-lightbox"
+  role="dialog"
+  aria-label="Agrandir l'image de la formation"
+  (click)="closeImageModal()">
+  <img
+    [src]="modalImageSrc"
+    class="image-lightbox__img"
+    [class.is-zoomed]="isImageZoomed"
+    alt="Image de la formation agrandie"
+    (click)="toggleImageZoom($event)" />
+  <button
+    type="button"
+    class="image-lightbox__close"
+    aria-label="Fermer l'aperçu"
+    (click)="closeImageModal(); $event.stopPropagation(); $event.preventDefault()">
+    X
+  </button>
+</div>

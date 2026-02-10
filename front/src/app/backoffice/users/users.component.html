@@ -1,0 +1,92 @@
+<div class="backoffice-page-container">
+  <div class="backoffice-header">
+    <a routerLink="/backoffice" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Retour au backoffice
+    </a>
+    <h1 class="page-title zilla-slab">Gestion des Utilisateurs</h1>
+    <p class="page-subtitle">{{ users.length }} utilisateur{{ users.length > 1 ? 's' : '' }} au total</p>
+    <button (click)="downloadCSV()" class="download-csv-button" *ngIf="users.length > 0">
+      <i class="bi bi-download"></i>
+      Télécharger en CSV
+    </button>
+  </div>
+
+  <div class="users-container" *ngIf="users.length > 0; else noUsers">
+    <div class="users-table-wrapper">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th (click)="sortUsers('id')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('id')"></i>
+              ID
+            </th>
+            <th (click)="sortUsers('username')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('username')"></i>
+              Pseudo
+            </th>
+            <th (click)="sortUsers('email')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('email')"></i>
+              Email
+            </th>
+            <th (click)="sortUsers('token_coin')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('token_coin')"></i>
+              Tokens
+            </th>
+            <th (click)="sortUsers('mojettes')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('mojettes')"></i>
+              Mojettes
+            </th>
+            <th (click)="sortUsers('role')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('role')"></i>
+              Rôle
+            </th>
+            <th (click)="sortUsers('confirmed')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('confirmed')"></i>
+              Statut
+            </th>
+            <th (click)="sortUsers('created_at')" class="sortable">
+              <i [class]="'bi ' + getSortIcon('created_at')"></i>
+              Date de création
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of sortedUsers" class="user-row">
+            <td class="user-id">{{ user.id }}</td>
+            <td class="user-username">
+              <span class="username-badge">{{ user.username || 'N/A' }}</span>
+            </td>
+            <td class="user-email">{{ user.email || 'N/A' }}</td>
+            <td class="user-tokens">
+              <span class="token-badge">{{ user.token_coin || 0 }}</span>
+            </td>
+            <td class="user-mojettes">
+              <span class="mojette-badge">{{ user.mojettes || 0 }}</span>
+            </td>
+            <td class="user-role">
+              <span class="role-badge" [class.admin]="user.role === 'admin'" [class.user]="user.role !== 'admin'">
+                {{ user.role || 'user' }}
+              </span>
+            </td>
+            <td class="user-status">
+              <span class="status-badge" [class.confirmed]="user.confirmed" [class.unconfirmed]="!user.confirmed">
+                <i [class]="user.confirmed ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                {{ user.confirmed ? 'Confirmé' : 'Non confirmé' }}
+              </span>
+            </td>
+            <td class="user-created-at">{{ formatDate(user.created_at) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noUsers>
+    <div class="empty-state">
+      <i class="bi bi-people"></i>
+      <h3>Aucun utilisateur trouvé</h3>
+      <p>Il n'y a aucun utilisateur dans le système pour le moment.</p>
+    </div>
+  </ng-template>
+</div>

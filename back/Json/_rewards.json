@@ -1,0 +1,68 @@
+{
+  "rewards": [
+      {
+        "game": 1,
+        "level": 1,
+        "reward": 15,
+        "help_1_percent_cost": 50,
+        "help_2_percent_cost": 80,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 1,
+        "level": 2,
+        "reward": 24,
+        "help_1_percent_cost": 50,
+        "help_2_percent_cost": 80,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 1,
+        "level": 3,
+        "reward": 30,
+        "help_1_percent_cost": 50,
+        "help_2_percent_cost": 80,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 1,
+        "level": 4,
+        "reward": 65,
+        "help_1_percent_cost": 50,
+        "help_2_percent_cost": 80,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 2,
+        "level": 1,
+        "reward": 4,
+        "help_1_percent_cost": 30,
+        "help_2_percent_cost": null,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 2,
+        "level": 2,
+        "reward": 6,
+        "help_1_percent_cost": 10,
+        "help_2_percent_cost": null,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 2,
+        "level": 3,
+        "reward": 60,
+        "help_1_percent_cost": 50,
+        "help_2_percent_cost": null,
+        "help_3_percent_cost": null
+      },
+      {
+        "game": 3,
+        "level": 1,
+        "reward": 6,
+        "help_1_percent_cost": null,
+        "help_2_percent_cost": null,
+        "help_3_percent_cost": null
+      }
+  ]
+}

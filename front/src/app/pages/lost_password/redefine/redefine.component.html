@@ -1,0 +1,75 @@
+<div
+  class="container-fluid d-flex flex-column position-absolute flex-grow-1 dialog-container no-scrollbar">
+  <div id="endDialog" class="dialog-card d-flex flex-column">
+    <mat-card-title class="register-title">
+      Récupération de mot de passe
+    </mat-card-title>
+
+    <mat-card-content class="dialog-content" style="overflow: auto">
+      <div class="modal-body">
+        <p>Choisissez votre nouveau mot de passe.</p>
+      </div>
+      <form
+        class="d-flex flex-column"
+        [formGroup]="form"
+        (ngSubmit)="updatePassword()">
+        <mat-form-field class="register-form-field mb-4" appearance="outline">
+          <input
+            matInput
+            placeholder="Mot de passe"
+            [formControl]="getField('password')"
+            name="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            required/>
+          <mat-icon
+            style="cursor: pointer"
+            (click)="hidePassword = !hidePassword">
+            {{ hidePassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+          <mat-error *ngIf="getField('password').hasError('required')">
+            Le mot de passe est requis.
+          </mat-error>
+          <mat-error *ngIf="getField('password').hasError('minlength')">
+            Le mot de passe est trop court (6 min).
+          </mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="register-form-field mb-4" appearance="outline">
+          <input
+            matInput
+            placeholder="Confirmation Mot de passe"
+            [formControl]="getField('passwordConfirm')"
+            name="passwordConfirm"
+            [type]="hidePassword ? 'password' : 'text'"
+            required/>
+
+          <mat-icon
+            style="cursor: pointer"
+            (click)="hidePassword = !hidePassword">
+            {{ hidePassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+          <mat-error *ngIf="getField('passwordConfirm').hasError('required')">
+            La confirmation est requise.
+          </mat-error>
+          <mat-error *ngIf="getField('passwordConfirm').hasError('notSame')">
+            Les mots de passe ne correspondent pas.
+          </mat-error>
+
+        </mat-form-field>
+        <div
+          class="modal-actions d-flex flex-row flex-wrap justify-content-between">
+          <button
+            class="btn btn-secondary btn-sm modal-btn"
+            (click)="goToPage('')"
+            type="button">
+            Retour
+          </button>
+          <button class="btn btn-primary btn-sm modal-btn" type="submit">
+            Modifier
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </div>
+</div>

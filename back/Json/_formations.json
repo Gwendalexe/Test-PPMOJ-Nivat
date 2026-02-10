@@ -1,0 +1,294 @@
+{
+    "formations": [
+        {
+            "id": 1,
+            "name": "Formation Histoire",
+            "code": "HISTOIRE",
+            "description": "C'est quoi ces cours « histoires » ?\nCe ne sont pas des cours de maths !\nIl y en aura un peu quand même... mais, a priori,les bases de lycée sont suffisantes pour les suivre. Ce ne sont pas non plus des cours d'épistémologie. C'est un joyeux mélange de concepts qui ont traversés la vie du prof Mojette et que l'on veut partager avec vous. Ce sont des présentations faites à partir de l'histoire et du parcours de personnes qui ont crée un concept qui s'est révélé utile dans la vie de tous les jours.\nUn cours « histoires »\n- remet cette personne dans son époque,\n- explique sa ou ses découverte(s)\n- montre à quoi ça sert\nEt surtout, ce « cours » vous permet de poser toutes les questions qui vous passent par la tête sur le sujet !",
+            "formations": [
+                {
+                    "id": 1,
+                    "name": "62 Héron d'Alexandrie le triangle et la racine carrée",
+                    "description": "Héron d'Alexandrie est un de mes mathématiciens préféré ! C'est d'abord le roi du triangle Avec une formule stupéfiante qui n'est même pas enseignée sous prétexte qu'elle possède une racine carrée. Mais c'est justement à cause de cela qu'il utilisa un algorithme pour calculer cette racine carrée, comme encore utilisé dans vos calculatrices !",
+                    "price": 0,
+                    "img_link": "heron.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-02-01 20:00:00",
+                            "duration_minutes": 70,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "1636 : Le point de FERMAT – TORRICELLI – STEINER.",
+                    "description": " Ou comment optimiser son trajet ? Une découverte commune à 2 grands scientifiques, Fermat le matheux et Toricelli le physicien. Un petit résultat géométrique mais qui est encore utilisé de nos jours dans différentes branches de l'ingéniérie. Résultat qui a ensuite été étendu par Steiner pour résoudre des cas plus compliqués ... mais pas tous ! Venez comprendre cette notion très simple et géométrique, utilisée par n'importe quel ingénieur en génie civil aujourd'hui lorsque l'on veut économiser les coups (et coûts) de pelleteuse !",
+                    "price": 1,
+                    "img_link": "fermat.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-03-26 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-03-27 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "1904 Découpages de Dudeney et quadrisection de Bernoulli",
+                    "description": "Henri Dudeney est un drôle de matheux et le roi die la dissection ! Il est à l'origine de plusieurs jeux sur notre site. Il s'est toujours posé des questions simples, sur lesquelles des matheux et des informaticiens ont planché tout le siècle dernier ou planchent encore ! Du coup, on fera des découpages avec lui mais aussi avec un Bernoulli pour couper des triangles et pas des cheveux en 4 !",
+                    "price": 1,
+                    "img_link": "dudeney.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-02 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-05 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "1899 Le théorème de Pick",
+                    "description": "Pick est le théorème le plus simple que je connaisse ! C'est aussi un résultat incroyable trouvé juste avant 1900 alors qu'on penserait qu'il date de la géométrie d'Alexandrie. Ce matheux, resté inconnu, qui avait engagé un jeune physicien inconnu (de prénom Albert) à l'Université de Vienne et qui est décédé dans les camps de concentration mérite d'être connu.",
+                    "price": 1,
+                    "img_link": "pick.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-09 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-10 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "name": "1967 Benoit Mandelbrot et les fractales",
+                    "description": "Benoit Mandelbrot est né à Varsovie avant la guerre. Heureusement, il avait de la famille en France qui l'a accueillie. Après quelques années en France, il passera l'essentiel de sa vie chez IBM aux USA . Sa théorie des fractales, inspirée du travail d'un autre français défiguré pendant la guerre de 14-18 révolutionne l'idée qu'on s'était fait d'une simple longueur ! Pour l'avoir vu à Washington, il savait un peu trop qu'il était un génie ... Mais ce concept a poursuivi le prof Mojette et sert aujourd'hui jusqu'en cancérologie !",
+                    "price": 1,
+                    "img_link": "mandelbrot.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-16 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-17 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "name": "1995 Le calcul de Pi de Simon Plouffe",
+                    "description": "Tous les matheux ont cherché à calculer Pi depuis 2000 ans. Il existe plein de formules dont certaines « amusantes » que nous reverrons. Notre ami Simon Plouffe a d'abord été « enregistré » par le Guinness book en 1977 pour avoir débité les 4096 premières décimales de Pi quand il était jeune. Sa fécondité d'esprit lui a fait inventer « l'inverseur de Plouffe » et aussi une nouvelle formule de calcul de Pi qui change tout !",
+                    "price": 1,
+                    "img_link": "plouffe.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-23 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-24 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "name": "1974 Les pavages de Roger Penrose",
+                    "description": "Sir Roger Penrose est un matheux incroyable au vu de tous ce qu'il a inventé. A chaque fois, Il s'attaque à des problèmes dont on croit qu'il n'y a pas de solution. A chaque fois, il en trouve ! Ici, on  regardera surtout ses pavages si incroyables (et les extensions depuis 2 ans) mais après avoir tout de même présenté quelques autres résultats majeurs comme la matrice pseudo-inverse.",
+                    "price": 1,
+                    "img_link": "penrose.jpg",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-30 18:00:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-05-01 10:30:00",
+                            "duration_minutes": 60,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Résolution de problèmes",
+            "code": "PROBLEME",
+            "description": "Ces cours « résolution de problèmes » sont un apprentissage de « comment résoudre un problème », un petit livre de Georg POLYA. Comme l'explique l'auteur, pour savoir répondre à cette question, vous devez expérimenter ! Donc ici, ce sont plutôt des travaux dirigés que des cours. On a pris l'exemple de la géométrie car les choses à savoir sont très limitées : les formules de Thalès et Pythagore et la résolution de l'équation du second degré, c'est tout ! Ce qui compte c'est la méthode pour résoudre et non pas le résultat.",
+            "formations": [
+                {
+                    "id": 8,
+                    "price": 2,
+                    "name": "Truc Délassant 2",
+                    "description": "",
+                    "document_link": "td2.pdf",
+                    "delivery_date": "2025-03-17 10:00:00",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-03-26 16:00:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-03-29 10:30:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "price": 2,
+                    "name": "Truc Délassant 3",
+                    "description": "",
+                    "document_link": "td3.pdf",
+                    "delivery_date": "2025-03-24 10:00:00",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-02 16:00:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-03 10:30:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 10,
+                    "price": 2,
+                    "name": "Truc Délassant 4",
+                    "description": "",
+                    "document_link": "td4.pdf",
+                    "delivery_date": "2025-03-31 10:00:00",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-09 16:00:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-10 10:30:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "price": 2,
+                    "name": "Truc Délassant 5",
+                    "description": "",
+                    "document_link": "td5.pdf",
+                    "delivery_date": "2025-04-07 10:00:00",
+                    "sessions": [
+                        {
+                            "delivery_date": "2025-04-16 16:00:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        },
+                        {
+                            "delivery_date": "2025-04-17 10:30:00",
+                            "duration_minutes": 90,
+                            "speaker": "Prof. Mojette",
+                            "live_link": "",
+                            "replay_link": ""
+                        }
+                    ]
+                },
+                {
+                        "id": 12,
+                        "price": 2,
+                        "name": "Truc Délassant 6",
+                        "description": "",
+                        "document_link": "td6.pdf",
+                        "delivery_date": "2025-04-14 10:00:00",
+                        "sessions": [
+                            {
+                                "delivery_date": "2025-04-23 16:00:00",
+                                "duration_minutes": 90,
+                                "speaker": "Prof. Mojette",
+                                "live_link": "",
+                                "replay_link": ""
+                            },
+                            {
+                                "delivery_date": "2025-04-24 10:30:00",
+                                "duration_minutes": 90,
+                                "speaker": "Prof. Mojette",
+                                "live_link": "",
+                                "replay_link": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+    ]
+}

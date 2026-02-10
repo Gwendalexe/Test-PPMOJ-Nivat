@@ -1,0 +1,137 @@
+<app-navbar></app-navbar>
+
+<div class="cart-container">
+  <div class="cart-header">
+    <h1 class="cart-title">Panier</h1>
+    <p class="cart-subtitle" *ngIf="!isCartEmpty()">
+      {{ cartItems.length }} article{{ cartItems.length > 1 ? 's' : '' }} dans votre panier
+    </p>
+  </div>
+
+  <!-- Empty Cart State -->
+  <div *ngIf="isCartEmpty()" class="empty-cart">
+    <div class="empty-cart-icon">
+      <span class="material-symbols-outlined">shopping_cart</span>
+    </div>
+    <h2 class="empty-cart-title">Votre panier est vide</h2>
+    <p class="empty-cart-text">Ajoutez des articles depuis la boutique pour commencer vos achats.</p>
+    <a href="/boutique" class="btn btn-primary btn-browse">Parcourir la boutique</a>
+  </div>
+
+  <!-- Cart Content -->
+  <div *ngIf="!isCartEmpty()" class="cart-content">
+    <!-- Cart Items -->
+    <div class="cart-items-section">
+      <div
+        *ngFor="let item of cartItems"
+        class="cart-item">
+        <div class="item-image-container">
+          <img
+            [src]="item.image || 'assets/beans.svg'"
+            [alt]="item.name"
+            class="item-image"
+            (error)="handleImageError($event)" />
+        </div>
+
+        <div class="item-details">
+          <h3 class="item-name">{{ item.amount }} {{ item.name }}</h3>
+          <div class="item-pricing">
+            <span class="item-price">{{ item.euro_unit_amount }}€</span>
+            <span *ngIf="item.mojette_unit_amount > 0" class="item-mojette-price">
+              ou {{ item.mojette_unit_amount }}
+              <img
+                src="assets/boutique/formations/formation_beans.png"
+                alt="Mojette"
+                class="mojette-icon-small" />
+            </span>
+          </div>
+        </div>
+
+        <div class="item-quantity-controls">
+          <button
+            class="quantity-btn"
+            [disabled]="item.quantity === 1"
+            (click)="decrementQuantity(item)"
+            aria-label="Diminuer la quantité">
+            <span class="material-symbols-outlined">remove</span>
+          </button>
+          <span class="quantity-value">{{ item.quantity }}</span>
+          <button
+            class="quantity-btn"
+            (click)="incrementQuantity(item)"
+            aria-label="Augmenter la quantité">
+            <span class="material-symbols-outlined">add</span>
+          </button>
+        </div>
+
+        <div class="item-total">
+          <span class="item-total-price">{{ (item.euro_unit_amount * item.quantity).toFixed(2) }}€</span>
+          <span *ngIf="item.mojette_unit_amount > 0" class="item-total-mojette">
+            ou {{ (item.mojette_unit_amount * item.quantity) }}
+            <img
+              src="assets/boutique/formations/formation_beans.png"
+              alt="Mojette"
+              class="mojette-icon-small" />
+          </span>
+        </div>
+
+        <button
+          class="remove-btn"
+          (click)="removeItem(item)"
+          aria-label="Retirer l'article">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <h2 class="summary-title">Résumé de la commande</h2>
+
+      <div class="summary-line">
+        <span class="summary-label">Sous-total</span>
+        <span class="summary-value">{{ total_euro.toFixed(2) }}€</span>
+      </div>
+
+      <div *ngIf="total_mojette > 0" class="summary-line">
+        <span class="summary-label">Total Mojettes</span>
+        <span class="summary-value">
+          {{ total_mojette }}
+          <img
+            src="assets/boutique/formations/formation_beans.png"
+            alt="Mojette"
+            class="mojette-icon-small" />
+        </span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-total">
+        <span class="total-label">Total</span>
+        <div class="total-amounts">
+          <span class="total-euro">{{ total_euro.toFixed(2) }}€</span>
+          <span *ngIf="total_mojette > 0" class="total-mojette">
+            ou {{ total_mojette }}
+            <img
+              src="assets/boutique/formations/formation_beans.png"
+              alt="Mojette"
+              class="mojette-icon-small" />
+          </span>
+        </div>
+      </div>
+
+      <button
+        class="checkout-btn"
+        [disabled]="isCartEmpty()"
+        (click)="checkout()">
+        <span class="material-symbols-outlined">lock</span>
+        Passer au paiement
+      </button>
+
+      <a href="/boutique" class="continue-shopping">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Continuer les achats
+      </a>
+    </div>
+  </div>
+</div>

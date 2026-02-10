@@ -1,0 +1,235 @@
+<!-- <div
+  class="alert alert-primary alert-dismissible position-relative"
+  role="alert">
+  PPMOJ est en bêta. En cas de bug, contactez
+  <a href="mailto:ppmoj30@gmail.com" class="alert-link">nous</a>.
+</div> -->
+
+<div
+  class="alert alert-primary alert-dismissible position-relative"
+  role="alert">
+  Les mails de confirmation d'inscription peuvent arriver dans les spams.
+  Pensez à vérifier !
+</div>
+
+<nav
+  class="navbar container-fluid d-flex align-items-center"
+  data-bs-theme="dark">
+  <div class="position-absolute flex">
+    <button
+      class="btn btn-navbar"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-label="Toggle navigation">
+      <!-- <img class="svg-img flip-svg" src="../../../assets/ProfMojette.svg" alt="Prof Mojette SVG"/> -->
+      <span class="material-symbols-outlined navbar-icon">menu</span>
+    </button>
+    <a class="btn btn-navbar navbar-icon" href="/calendrier">
+      <span class="material-symbols-outlined">calendar_month</span>
+    </a>
+  </div>
+
+  <h2
+    *ngIf="!isHomePage()"
+    class="titre d-none d-lg-block zilla-slab"
+    [ngClass]="{ 'titre--dark': shouldUseDarkTitle }">
+    <a href="#">Les Problèmes du Professeur Mojette</a>
+  </h2>
+  <h2
+    *ngIf="!isHomePage()"
+    class="titre d-none d-md-block d-lg-none zilla-slab"
+    [ngClass]="{ 'titre--dark': shouldUseDarkTitle }">
+    <a href="#">PPMOJ</a>
+  </h2>
+  <!-- <h2 *ngIf="!isHomePage()" class="titre d-md-none zilla-slab">PPMOJ</h2> -->
+  <div
+    class="offcanvas offcanvas-start"
+    tabindex="-1"
+    id="offcanvasNavbar"
+    aria-labelledby="offcanvasNavbarLabel"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasNavbar"
+    aria-controls="offcanvasNavbar"
+    aria-label="Toggle navigation">
+    <div class="offcanvas-header">
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="offcanvas-section">
+        <a class="nav-link header zilla-slab" href="/">Accueil</a>
+        <ul class="navbar-nav justify-content-end flex-grow-1 px-3">
+          <li class="nav-item">
+            <a class="nav-link" href="/vef" aria-disabled="false"
+              >Vadrouille en France</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mojette" aria-disabled="false"
+              >Jeu Mojette</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/carredudeney" aria-disabled="false"
+              >Les Carrés de Dudeney</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nivat" aria-disabled="false"
+              >Jeu Maurice Nivat</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="offcanvas-section">
+        <a class="nav-link header zilla-slab" href="/enigme-semaine"
+          >Enigme de la semaine</a
+        >
+        <ul class="navbar-nav justify-content-end flex-grow-1 px-3">
+          <li class="nav-item">
+            <a class="nav-link" href="/work-in-progress" aria-disabled="false"
+              >Décoder l'énigme de la semaine</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/wall-of-fame" aria-disabled="false"
+              >Wall Of Fame</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="offcanvas-section">
+        <a class="nav-link header zilla-slab" href="/formations"
+          >Espace Formations</a
+        >
+        <ul class="navbar-nav justify-content-end flex-grow-1 px-3">
+          <li class="nav-item">
+            <a class="nav-link" href="/histoire" aria-disabled="true"
+              >Histoire des mathématiques</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/formations/PROBLEME" aria-disabled="true"
+              >Formations "Résolution de problèmes"</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="offcanvas-section">
+        <a class="nav-link header zilla-slab" href="/boutique">Boutique</a>
+      </div>
+      <div class="offcanvas-section">
+        <ul class="navbar-nav justify-content-end flex-grow-1 px-3">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="/conditions-generales-de-vente"
+              aria-disabled="true">
+              Conditions générales de vente
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mentions-legales" aria-disabled="false"
+              >Mentions Légales</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/remerciements" aria-disabled="false"
+              >Remerciements</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isConnected()" class="connect-btn">
+    <button
+      class="btn btn-sm btn-text btn-outline d-flex login-button position-absolute"
+      (click)="dialogCallback()">
+      <div class="ItemsButtonLogin d-flex flex-row align-items-center">
+        <i class="fa fa-user"></i>
+        <span>Connexion</span>
+      </div>
+    </button>
+  </div>
+  <div
+    class="navbar-button-container d-flex flex-row position-absolute"
+    *ngIf="isConnected()">
+    <a
+      class="btn navbar-icon position-relative"
+      href="/cart"
+      *ngIf="!isCartEmpty()">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <span
+        class="position-absolute translate-middle badge rounded-pill bg-danger"
+        style="top: 10%; left: 80%">
+        {{ getCartNumber() }}
+      </span>
+    </a>
+    <a
+      class="token-span-container d-flex flex-row text-center navbar-icon"
+      href="/boutique">
+      <span class="material-symbols-outlined">poker_chip</span>
+      <span class="nb-mojette">{{ tokenCoins || 0 }}</span>
+    </a>
+    <a
+      class="mojette-span-container d-flex flex-row text-center navbar-icon"
+      href="/boutique">
+      <img class="svg-img" src="../../../assets/beans.svg" alt="Mojette SVG" />
+      <span class="nb-mojette">{{ mojettes || 0 }}</span>
+    </a>
+    <button
+      class="btn btn-sm btn-text btn-outline d-flex account-button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <div class="ItemsButtonLogin d-flex flex-row align-items-center">
+        <i class="fa fa-user"></i>
+        <span>{{ username }}</span>
+      </div>
+    </button>
+    <ul class="dropdown-menu">
+      <li
+        class="account-management clickable"
+        (click)="goToProfilePage()"
+        (keypress)="goToProfilePage()"
+        tabindex="0">
+        <i class="bi bi-person-fill-gear"></i>
+        <span>Mon compte</span>
+      </li>
+      <li class="account-info mojettes d-block d-lg-none">
+        <img
+          class="svg-img"
+          src="../../../assets/beans.svg"
+          alt="Mojette SVG" />
+        <span class="nb-mojette no-scrollbar">{{ mojettes || 0 }} Mojs</span>
+      </li>
+      <li class="account-info token d-flex align-items-center d-lg-none">
+        <span class="material-symbols-outlined">poker_chip</span>
+        <span class="nb-mojette no-scrollbar"
+          >{{ tokenCoins || 0 }} Jetons</span
+        >
+      </li>
+      <!-- <li class="account-info d-block d-lg-none"></li>
+          <span class="material-symbols-outlined">poker_chip</span>
+          <span class="nb-mojette no-scrollbar">{{ 0 }} Jetons</span>
+        </li> -->
+      <li
+        class="account-logout clickable"
+        (click)="logout()"
+        (keypress)="logout()"
+        tabindex="0">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Se déconnecter</span>
+        <!-- <button class="btn btn-text btn-logout" (click)="logout()">
+            Déconnexion
+          </button> -->
+      </li>
+    </ul>
+  </div>
+</nav>

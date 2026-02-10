@@ -1,0 +1,113 @@
+<div class="svgContainer">
+  <div class="map-header">
+    <!-- <div class="breadcrumb-container">
+      <span *ngIf="zoomedRegion && !zoomedDpt" class="breadcrumb">FRANCE > {{ zoomedRegion.name }}</span>
+      <span *ngIf="zoomedRegion && zoomedDpt" class="breadcrumb">FRANCE > {{ zoomedRegion.name }} > {{ zoomedDpt.name }}</span>
+    </div> -->
+    <div class="progression-container d-flex flex-column justify-center">
+      <span class="text-center progression-span"
+        >{{ nbPbSolved }}/{{ totalNbPb }}</span
+      >
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          attr.style="width: {{ (nbPbSolved * 100) / totalNbPb }}%"
+          attr.aria-valuenow="{{ nbPbSolved }}"
+          aria-valuemin="0"
+          attr.aria-valuemax="{{ totalNbPb }}"></div>
+      </div>
+    </div>
+    <button
+      *ngIf="zoomedRegion && !zoomedDpt"
+      class="btn btn-text btn-sm btn-back"
+      (click)="resetZoom()">
+      <mat-icon>arrow_back</mat-icon><span>VERS FRANCE</span>
+    </button>
+    <button
+      *ngIf="zoomedRegion && zoomedDpt"
+      class="btn btn-text btn-sm btn-back"
+      (click)="zoomToRegion(zoomedRegion)">
+      <mat-icon>arrow_back</mat-icon><span>VERS {{ zoomedRegion.name }}</span>
+    </button>
+  </div>
+
+  <svg
+    *ngIf="!zoomedRegion"
+    version="1.1"
+    encoding="utf-8"
+    xmlns="http://www.w3.org/2000/svg"
+    width="800"
+    height="900"
+    viewBox="179.9834 168.5592 99.7196 95.6924">
+    <g
+      id="regions"
+      transform="matrix(1, 0, 0, 1, -205.40106201171875, 167.55917358398438)">
+      <ng-container *ngFor="let region of regions">
+        <path
+          class="clickable"
+          [id]="'region_' + region.region_code"
+          [attr.d]="region.coordinates"
+          (mouseenter)="setHoverRegion(region)"
+          (mouseleave)="setHoverRegion(null)"
+          (click)="zoomToRegion(region)">
+          <title>{{ region.name }}</title>
+        </path>
+      </ng-container>
+    </g>
+    <text
+      id="regionName"
+      x="0"
+      y="0"
+      transform="matrix(1, 0, 0, 1, -205.40106201171875, 167.55917358398438)"></text>
+  </svg>
+  <svg *ngIf="zoomedRegion && !zoomedDpt" [attr.viewBox]="zoomedRegion.viewBox">
+    <g
+      id="departments"
+      transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)">
+      <ng-container *ngFor="let department of showedDpts">
+        <path
+          class="clickable"
+          [id]="'department_' + department.number"
+          [attr.d]="department.coordinates"
+          (mouseenter)="setHoverDepartment(department)"
+          (mouseleave)="setHoverDepartment(null)"
+          (click)="zoomToDepartment(department)"
+          [attr.fill]="department.color">
+          <title>{{ department.name }}</title>
+        </path>
+      </ng-container>
+    </g>
+    <text
+      id="departmentName"
+      x="0"
+      y="0"
+      transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"></text>
+  </svg>
+  <div
+    *ngIf="zoomedRegion && zoomedDpt"
+    class="dpt-image-container position-relative">
+    <map name="departmentMap">
+      <area
+        *ngFor="let zone of zones; let i = index"
+        class="clickable"
+        shape="circle"
+        [coords]="zonesCoords[i] || '0,0,0'"
+        [alt]="zone.type"
+        (click)="handleClick(zone.type)"
+        (keypress)="handleClick(zone.type)"
+        tabindex="0" />
+    </map>
+    <img
+      id="dptImageRef"
+      class="zoomedDpt"
+      [src]="dptImage"
+      alt="Département"
+      usemap="#departmentMap"
+      (load)="imageLoaded()"
+      style="height: auto" />
+
+    <!-- <img id="dptImageRefBlur" [src]="dptImage" alt="Département Blurred" usemap="#departmentMap"
+        (load)="imageLoaded()" style="width: 100%; height: auto;"> -->
+  </div>
+</div>

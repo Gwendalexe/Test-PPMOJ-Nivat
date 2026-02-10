@@ -1,0 +1,111 @@
+<app-navbar></app-navbar>
+
+<div
+  *ngIf="!isLoading"
+  [style.display]="hasBeenSolved ? 'flex' : 'none'"
+  class="container-fluid flex-column position-relative flex-grow-1 dialog-container no-scrollbar">
+  <div id="endDialog" class="card primary-card">
+    <h2 class="text-center">Félicitations !</h2>
+    <div class="d-flex flex-column">
+      <p>
+        Vous avez résolu le Carré Par Terre N°{{ carreId }} en
+        {{ timeToString(timeElapsed) }} !
+      </p>
+      <p>
+        Vous avez remporté <b>{{ reward }}</b> mojettes !
+      </p>
+    </div>
+    <div class="btn-container d-flex flex-row justify-content-between">
+      <button (click)="newGrid()" class="btn btn-primary btn-sm">
+        Nouvelle grille
+      </button>
+      <button (click)="goToHomePage()" class="btn btn-secondary btn-sm">
+        Retour à l'accueil
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  [style.display]="hasBeenSolved ? 'none' : 'flex'"
+  class="container-fluid flex-column align-items-center flex-grow-1">
+  <div class="container card primary-card cpt-container">
+    <!-- <button class="btn btn-help" id="toggle-help-btn">?</button> -->
+    <div
+      class="cpt-header container d-flex flex-row justify-content-between align-items-stretch">
+      <div class="timer-container container d-flex">
+        <button
+          (click)="toggleTimer()"
+          id="timer-btn"
+          class="btn btn-timer btn-primary btn-sm">
+          Start
+        </button>
+        <span id="timer-span" class="timer">00:00</span>
+      </div>
+      <div class="info-container container d-flex">
+        <span id="grid-info-span"></span>
+      </div>
+    </div>
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="surfaceTiles"
+      class="drag-zone"
+      cdkDropListSortingDisabled="true"
+      (cdkDropListDropped)="drop($event)"
+      id="surface">
+      <ng-container *ngFor="let item of surfaceTiles">
+        <div
+          id="tile_{{ item.id }}"
+          cdkDrag
+          cdkDragBoundary=".drag-zone"
+          class="tile surface-tile"
+          [style.top.px]="item.y"
+          [style.left.px]="item.x"
+          [style.z-index]="item['z-index']"
+          [style.width.px]="item.width"
+          [style.backgroundColor]="item.color.background"
+          [style.color]="item.color.color"
+          (cdkDragDropped)="changePosition($event, item)">
+          <!-- <div *cdkDragPreview class="tile-preview" [style.width.px]="item.width"></div> -->
+          <div *cdkDragPlaceholder class="tile-placeholder"></div>
+        </div>
+      </ng-container>
+      <span id="grid-span"></span>
+    </div>
+  </div>
+
+  <div
+    id="inventaire"
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="inventoryTiles"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="card primary-card d-flex flex-row no-scrollbar example-list"
+    (cdkDropListDropped)="drop($event)"
+    (wheel)="onHorizontalScroll($event)">
+    <div
+      class="tile inventory-tile"
+      *ngFor="let item of inventoryTiles"
+      cdkDrag
+      (mousedown)="off = { x: $event.offsetX || 0, y: $event.offsetY || 0 }"
+      [cdkDragData]="item"
+      (cdkDragMoved)="moved($event)"
+      [style.backgroundColor]="item.color.background"
+      [style.color]="item.color.color">
+      {{ item.size }} x {{ item.size }}
+      <!-- <div *cdkDragPreview  class="tile-preview"></div> -->
+      <div *cdkDragPlaceholder class="tile-placeholder"></div>
+    </div>
+  </div>
+</div>
+<!-- <div class="wrapper">
+  <pre
+    >{{ inventoryTiles | json }}
+</pre
+  >
+  <pre
+    >{{ surfaceTiles | json }}
+</pre
+  >
+</div> -->

@@ -1,0 +1,65 @@
+<app-navbar (openDialog)="openDialog()"></app-navbar>
+
+<!-- Payment Success Modal -->
+<div
+  *ngIf="showPaymentSuccess"
+  class="payment-success-overlay d-flex align-items-center justify-content-center"
+  (click)="closePaymentSuccess()">
+  <div
+    class="payment-success-modal card primary-card"
+    (click)="$event.stopPropagation()">
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      (click)="closePaymentSuccess()"
+      aria-label="Close"></button>
+    <div class="payment-success-content text-center">
+      <h2 class="mb-3">Merci pour votre achat !</h2>
+      <p class="mb-2">
+        Votre paiement a été effectué avec succès.
+      </p>
+      <p class="mb-4">
+        Un reçu vous sera envoyé par email sous peu.
+      </p>
+      <button
+        class="btn btn-primary btn-sm"
+        (click)="closePaymentSuccess()">
+        Parfait !
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="container-fluid home-container d-flex flex-column align-items-center">
+  <app-register #connectDialog></app-register>
+  <div
+    class="title-container d-flex flex-row justify-content-center align-items-center">
+    <img
+      class="svg-img flip-svg d-none d-md-flex"
+      src="../../../assets/ProfMojette.svg"
+      alt="Prof Mojette SVG" />
+    <h1 class="home-title zilla-slab">Les Problèmes du Professeur Mojette</h1>
+    <img
+      class="svg-img d-none d-md-flex"
+      src="../../../assets/ProfMojette.svg"
+      alt="Prof Mojette SVG" />
+  </div>
+  <app-carrousel
+    class="card-container d-flex flex-row justify-content-center gap-2">
+    <app-carrousel-card
+      class="padding-0"
+      *ngFor="let card of gameCards"
+      style="max-width: 300px; max-height: 400px">
+      <app-game-card [card]="card"></app-game-card>
+    </app-carrousel-card>
+  </app-carrousel>
+
+  <!-- Temporary test button
+  <button
+    class="btn btn-secondary btn-sm mt-3"
+    (click)="testPaymentSuccess()"
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 99998;">
+    🧪 Test Payment Success
+  </button> -->
+</div>

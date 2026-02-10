@@ -1,0 +1,127 @@
+<!-- En-tête de la page -->
+<div *ngIf="!isEditMode">
+  <div class="header">
+    <h1>Créer une nouvelle énigme</h1>
+    <!-- Ajoutez un lien ou un bouton pour fermer la page si nécessaire -->
+  </div>
+  <button (click)="onEnigmeSelect()">
+    {{
+      isEditMode
+        ? 'Créer une nouvelle énigme'
+        : 'Modifier une énigme
+        existante'
+    }}
+  </button>
+  <!-- Contenu de la page -->
+  <div class="body-background">
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <div class="enigme-container d-md-flex justify-content-between">
+          <div class="consigne-container">
+            <div class="infos-container">
+              <label for="idregion">Choisissez la région :</label>
+              <select class="idregion" formControlName="idregion">
+                <option
+                  *ngFor="let entry of RegionMappingEntries | keyvalue"
+                  [value]="entry.key">
+                  {{ entry.key }} - {{ entry.value }}
+                </option>
+              </select>
+              <select class="idDepartement" formControlName="idDepartement">
+                <option
+                  *ngFor="
+                    let entry of DepartmentsMappingEntries[
+                      form.get('idregion')?.value
+                    ] | keyvalue
+                  "
+                  [value]="entry.key">
+                  {{ entry.key }} - {{ entry.value }}
+                </option>
+              </select>
+              <select class="type" formControlName="type">
+                <option
+                  *ngFor="let entry of TypesMappingEntries | keyvalue"
+                  [value]="entry.key">
+                  {{ entry.value }}
+                </option>
+              </select>
+              <input formControlName="niveau" placeholder="Difficulté : " />
+              <input formControlName="recompense" placeholder="Récompense : " />
+              <input
+                formControlName="nbQuestion"
+                placeholder="Nombre de question : " />
+              <input
+                formControlName="nbValToFind"
+                placeholder="Nombre de ValToFind : " />
+              <input formControlName="nbItem" placeholder="Nombre d'Item : " />
+            </div>
+            <input formControlName="enonce" placeholder="Enoncé : " />
+            <input
+              formControlName="ValeurAide1"
+              placeholder="Valeur de l'aide : " />
+            <input
+              formControlName="enonce_Aide"
+              placeholder="Enoncé de l'aide : " />
+          </div>
+          <label for="imageInput">Sélectionner une image :</label>
+          <input type="file" (change)="onFileSelected($event)" />
+          <div class="Valeursetquestion">
+            <input
+              formControlName="question"
+              placeholder="Intitulé des questions séparées par ';'" />
+            <input
+              formControlName="liste_val"
+              placeholder="Liste des variables de l'énigme au format json : " />
+            <input
+              formControlName="solutions"
+              placeholder="Liste des solutions de l'énigme au format json : " />
+          </div>
+        </div>
+      </div>
+      <!-- Ajoute ici des boutons pour soumettre le formulaire, par exemple -->
+      <button type="submit">Soumettre</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="isEditMode">
+  <div class="header">
+    <h1>Modifier une énigme existante</h1>
+  </div>
+
+  <select [(ngModel)]="selectedEnigmeId" (change)="onEnigmeSelect()">
+    <option *ngFor="let enigme of enigmes" [value]="enigme.id">
+      {{ enigme.nomenigme }}
+    </option>
+  </select>
+  <button (click)="toggleEditMode()">
+    {{
+      isEditMode
+        ? 'Créer une nouvelle énigme'
+        : 'Modifier une énigme
+        existante'
+    }}
+  </button>
+  <!-- Formulaire de modification -->
+  <form *ngIf="selectedEnigme" (ngSubmit)="updateEnigme()">
+    <div class="form-group">
+      <label>Nom de l'énigme:</label>
+      <input
+        type="text"
+        [(ngModel)]="selectedEnigme.nomenigme"
+        name="nomenigme"
+        class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Niveau:</label>
+      <input
+        type="number"
+        [(ngModel)]="selectedEnigme.niveauValue"
+        name="niveauValue"
+        class="form-control" />
+    </div>
+    <!-- Continuez avec les autres champs nécessaires -->
+    <button type="submit" class="btn btn-primary">
+      Mettre à jour l'énigme
+    </button>
+  </form>
+</div>

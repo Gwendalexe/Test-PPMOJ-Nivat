@@ -1,0 +1,23 @@
+<div class="formation-illustration-container">
+  <img *ngIf="getImageUrl()" class="formation-illustration" [src]="getImageUrl()" [alt]="getTitle()" />
+</div>
+
+<div class="formation-body">
+  <h2 class="formation-name zilla-slab">{{ getTitle() }}</h2>
+
+  <div class="formation-meta">
+    <p *ngIf="getNextDate()" class="formation-line">
+      {{ getNextDate() }}
+    </p>
+    <p *ngIf="hasNoDate()" class="formation-line not-available">
+      Pas de date actuellement
+    </p>
+
+    <p class="formation-line">{{ getSchedule() }}</p>
+    <p class="formation-line formation-price">{{ getPrice() }} <span class="material-symbols-outlined">poker_chip</span></p>
+  </div>
+
+  <div class="formation-actions">
+    <a [href]="getNavigationLink()" class="btn btn-primary btn-sm btn-elevated">Plus d'informations</a>
+  </div>
+</div>

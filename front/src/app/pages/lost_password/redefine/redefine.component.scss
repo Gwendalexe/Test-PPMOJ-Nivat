@@ -1,0 +1,36 @@
+.dialog-content {
+    &>p {
+        margin: 0.25em 0;
+        font-size: 1.1em;
+    }
+}
+
+.register-title {
+    margin-bottom: 0.5em;
+}
+
+mat-card-content {
+    margin-top: 0.5em;
+}
+
+.modal-body {
+    &>p {
+        margin-bottom: 6px;
+    }
+}
+
+mat-icon {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+form {
+    margin-top: 1.5em;
+}
+
+mat-form-field {
+  margin-bottom: 1.5em;
+}

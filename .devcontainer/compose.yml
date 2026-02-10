@@ -1,0 +1,31 @@
+services:
+  devcontainer:
+    # using default devcontainer debian image, the dev tools will be added as features in devcontainer.json
+    image: "mcr.microsoft.com/devcontainers/base:bullseye"
+    volumes:
+      - ..:/workspace:cached
+    stdin_open: true
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      ENV: development_local
+    network_mode: service:db
+    command: sleep infinity
+
+  db:
+    hostname: ${DB_HOST}
+    image: mysql/mysql-server:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

@@ -1,0 +1,51 @@
+<div class="nivat-board" *ngIf="grid && grid.length" [style.grid-template-columns]="getGridTemplate()">
+  <div class="empty-space"></div>
+
+  <div *ngFor="let col of grid[0]; let c = index" class="sum-cell">
+    {{ getColSum(c) }}
+  </div>
+
+  <div class="empty-space span-2"></div>
+
+  <ng-container *ngFor="let row of grid; let r = index">
+    <div class="sum-cell">{{ getRowSum(r) }}</div>
+
+    <div
+      *ngFor="let cell of row"
+      class="grid-cell"
+      [style.background-color]="getCellColor(cell)"
+      [style.color]="cell === 0 ? 'black' : 'white'">
+      {{ getDisplayValue(cell) }}
+    </div>
+
+    <button class="btn btn-outline-light btn-side" (click)="move(r, MoveDirection.Left)" aria-label="Shift row left">
+      <i class="bi bi-caret-left-fill"></i>
+    </button>
+
+    <button class="btn btn-outline-light btn-side" (click)="move(r, MoveDirection.Right)" aria-label="Shift row right">
+      <i class="bi bi-caret-right-fill"></i>
+    </button>
+  </ng-container>
+
+  <div class="empty-space"></div>
+  <button
+    *ngFor="let col of grid[0]; let i = index"
+    class="btn btn-outline-light btn-bottom"
+    (click)="move(i, MoveDirection.Up)"
+    aria-label="Shift column up">
+    <i class="bi bi-caret-up-fill"></i>
+  </button>
+
+  <div class="empty-space span-2"></div>
+  <div class="empty-space"></div>
+
+  <button
+    *ngFor="let col of grid[0]; let i = index"
+    class="btn btn-outline-light btn-bottom"
+    (click)="move(i, MoveDirection.Down)"
+    aria-label="Shift column down">
+    <i class="bi bi-caret-down-fill"></i>
+  </button>
+
+  <div class="empty-space span-2"></div>
+</div>

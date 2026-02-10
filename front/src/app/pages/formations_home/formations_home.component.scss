@@ -1,0 +1,458 @@
+@use "../../../app/variables.scss";
+
+// Override global app-root styles
+:host {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: none;
+  height: auto;
+  flex: none;
+  --text-color: #000000 !important;
+  --secondary-color: #000000 !important;
+}
+
+// Fix navbar for light background
+::ng-deep app-navbar {
+  --text-color: #000000 !important;
+  --secondary-color: #000000 !important;
+
+  .navbar {
+    color: #000000 !important;
+
+    button.btn-navbar,
+    .btn-navbar {
+      color: #000000 !important;
+
+      .material-symbols-outlined {
+        color: #000000 !important;
+      }
+    }
+  }
+
+  h2.titre {
+    & > a {
+      color: #000000 !important;
+    }
+  }
+
+  .navbar-button-container {
+    .navbar-icon,
+    .token-span-container,
+    .mojette-span-container {
+      color: #000000 !important;
+
+      .nb-mojette,
+      span {
+        color: #000000 !important;
+      }
+
+      .material-symbols-outlined {
+        color: #000000 !important;
+      }
+    }
+
+    .material-symbols-outlined {
+      color: #000000 !important;
+    }
+  }
+
+  .account-button,
+  .login-button {
+    color: #000000 !important;
+    border-color: #000000 !important;
+
+    .ItemsButtonLogin {
+      color: #000000 !important;
+
+      i,
+      span {
+        color: #000000 !important;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    color: #000000 !important;
+    border-color: #000000 !important;
+
+    li {
+      color: #000000 !important;
+
+      span {
+        color: #000000 !important;
+      }
+    }
+  }
+}
+
+.formations-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 3em 1em;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: visible;
+  overflow-x: hidden;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.title-container {
+  width: 100%;
+  margin-bottom: 3em;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-title {
+  color: #000000;
+  font-size: 2.5em;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  text-align: center;
+  text-wrap: balance;
+
+  @media (min-width: 768px) {
+    font-size: 3em;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8em;
+  }
+}
+
+// Formation Rows with Logos
+.formations-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+  margin: 1em 0;
+  width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 2em;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.5em;
+  }
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5em;
+
+  &:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.formation-logo {
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+
+  @media (max-width: 768px) {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 160px;
+    max-height: 160px;
+  }
+}
+
+// Decorative Separator (matching boutique)
+.category-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  margin: 0.8em 0;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.separator-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #1a1a1a 50%, transparent);
+}
+
+.separator-ornament {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  flex-shrink: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    background-color: #1a1a1a;
+    box-shadow:
+      -20px 0 0 -3px #1a1a1a,
+      20px 0 0 -3px #1a1a1a;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 12px;
+    background-color: #1a1a1a;
+    box-shadow:
+      -14px 0 0 0 #1a1a1a,
+      14px 0 0 0 #1a1a1a;
+  }
+}
+
+// Description Text Section
+.description-container {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  padding: 2em 1em;
+  margin: 0 auto;
+}
+
+.description-text {
+  font-size: 1.1em;
+  color: #333333;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+// Mixed Cards Section
+.mixed-cards-section {
+  width: 100%;
+  padding: 2em 1em;
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .section-header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5em;
+      margin-bottom: 2em;
+      position: relative;
+  
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 1em;
+      }
+    }
+  .section-title {
+    color: #000000;
+    font-size: 2em;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    text-align: center;
+
+    @media (max-width: 480px) {
+      font-size: 1.5em;
+    }
+  }
+
+    .sort-controls {
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+    }
+  
+    .criteria-selector {
+      position: relative;
+    }
+  
+    .criteria-menu {
+      position: absolute;
+      top: calc(100% + 0.5em);
+      left: 0;
+      background-color: #ffffff;
+      border: 2px solid #1a1a1a;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      min-width: 150px;
+      overflow: hidden;
+      animation: slideDown 0.2s ease;
+  
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+  
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+  
+      .criteria-option {
+        width: 100%;
+        padding: 0.75em 1em;
+        background-color: #ffffff;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        cursor: pointer;
+        text-align: left;
+        font-size: 0.9em;
+        color: #1a1a1a;
+        transition: all 0.2s ease;
+        font-weight: 500;
+  
+        &:last-child {
+          border-bottom: none;
+        }
+  
+        &:hover {
+          background-color: #f5f5f5;
+          color: #1a1a1a;
+        }
+  
+        &.selected {
+          background-color: #1a1a1a;
+          color: #ffffff;
+        }
+  
+        &.selected:hover {
+          background-color: #333333;
+        }
+      }
+    }
+  
+    .sort-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0.5em 1em;
+      background-color: #ffffff;
+      border: 2px solid #1a1a1a;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #1a1a1a;
+      font-weight: 500;
+  
+      .material-symbols-outlined {
+        font-size: 1.2em;
+        transition: transform 0.2s ease;
+      }
+  
+      .sort-label {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+  
+      &.active {
+        background-color: #1a1a1a;
+        color: #ffffff;
+      }
+  
+      &:hover {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+  
+      &:active {
+        transform: translateY(0);
+      }
+  
+      &.criteria-button {
+        // Additional styling for criteria button if needed
+      }
+  
+      &.direction-button {
+        padding: 0.5em 0.75em;
+        min-width: 50px;
+        justify-content: center;
+  
+        .material-symbols-outlined {
+          margin: 0;
+        }
+      }
+  
+      @media (max-width: 480px) {
+        padding: 0.4em 0.8em;
+  
+        .sort-label {
+          font-size: 0.85em;
+        }
+  
+        &.direction-button {
+          padding: 0.4em 0.6em;
+          min-width: 45px;
+        }
+      }
+    }
+  .loading-container {
+    width: 100%;
+    padding: 4em 2em;
+    text-align: center;
+
+    p {
+      color: #666;
+      font-size: 1em;
+    }
+  }
+
+  .cards-row {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    --bs-gutter-x: 1.5rem;
+
+    app-formation-card {
+      display: flex;
+      height: 100%;
+    }
+  }
+
+  .not-available {
+    width: 100%;
+    text-align: center;
+    padding: 2em;
+    color: #666;
+  }
+}

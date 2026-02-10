@@ -1,0 +1,16 @@
+{
+  "problem_type": [
+    {
+        "id": 0,
+        "name": "Mathématique"
+    },
+    {
+      "id": 1,
+      "name": "Informatique"
+    },
+    {
+      "id": 2,
+      "name": "Région"
+    }
+  ]
+}

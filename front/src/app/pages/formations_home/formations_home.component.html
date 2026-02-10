@@ -1,0 +1,130 @@
+<app-navbar (onOpenDialog)="openDialog()"></app-navbar>
+
+<div class="formations-container">
+  <div class="title-container d-flex flex-row justify-content-center align-items-center">
+    <h1 class="home-title zilla-slab">Les Formations du Professeur Mojette</h1>
+  </div>
+
+  <!-- First Row: Agenda & Boutique -->
+  <div class="formations-row">
+    <a href="/formations/calendrier" class="logo-link" aria-label="Agenda">
+      <img
+        src="../../../assets/formations/agenda_logo.png"
+        alt="Agenda Logo"
+        class="formation-logo" />
+    </a>
+
+    <a href="/boutique" class="logo-link" aria-label="Boutique">
+      <img
+        src="../../../assets/formations/boutique_logo.png"
+        alt="Boutique Logo"
+        class="formation-logo" />
+    </a>
+  </div>
+
+  <!-- Decorative Separator -->
+  <div class="category-separator">
+    <div class="separator-line"></div>
+    <div class="separator-ornament"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Second Row: Histoire, Problème, Enigme -->
+  <div class="formations-row">
+    <a href="/histoire" class="logo-link" aria-label="Histoire des Maths">
+      <img
+        src="../../../assets/formations/histoire_logo.png"
+        alt="Histoire des Maths Logo"
+        class="formation-logo" />
+    </a>
+
+    <a href="/formations/PROBLEME" class="logo-link" aria-label="Résolution de Problème">
+      <img
+        src="../../../assets/formations/pb_logo.png"
+        alt="Résolution de Problème Logo"
+        class="formation-logo" />
+    </a>
+
+    <a href="/enigme-semaine" class="logo-link" aria-label="Enigme de la Semaine">
+      <img
+        src="../../../assets/formations/enigme_logo.png"
+        alt="Enigme de la Semaine Logo"
+        class="formation-logo" />
+    </a>
+  </div>
+
+  <!-- Decorative Separator -->
+  <div class="category-separator">
+    <div class="separator-line"></div>
+    <div class="separator-ornament"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Mixed Cards Section: Formations + Problems + Week Problems -->
+  <div class="mixed-cards-section">
+    <div class="section-header">
+      <h2 class="section-title zilla-slab">Découvrez nos contenus</h2>
+      <div class="sort-controls">
+        <!-- Criteria selector button -->
+        <div class="criteria-selector">
+          <button
+            class="sort-button criteria-button"
+            [class.active]="sortCriteria !== 'none'"
+            (click)="toggleCriteriaMenu()"
+            [attr.aria-label]="'Critère de tri: ' + (sortCriteria === 'price' ? 'prix' : 'aucun')">
+            <span class="material-symbols-outlined">
+              sort
+            </span>
+            <span class="sort-label">{{ sortCriteria === 'price' ? 'Prix' : 'Trier' }}</span>
+          </button>
+
+          <!-- Criteria dropdown menu -->
+          <div class="criteria-menu" *ngIf="showCriteriaMenu">
+            <button
+              class="criteria-option"
+              [class.selected]="sortCriteria === 'none'"
+              (click)="selectCriteria('none')">
+              Aucun tri
+            </button>
+            <button
+              *ngFor="let criteria of availableCriteria"
+              class="criteria-option"
+              [class.selected]="sortCriteria === criteria.value"
+              (click)="selectCriteria(criteria.value)">
+              {{ criteria.label }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Direction selector button -->
+        <button
+          class="sort-button direction-button"
+          [class.active]="sortDirection !== 'none'"
+          (click)="toggleSortDirection()"
+          [attr.aria-label]="'Ordre de tri: ' + (sortDirection === 'asc' ? 'croissant' : sortDirection === 'desc' ? 'décroissant' : 'aucun')">
+          <span class="material-symbols-outlined">
+            {{ sortDirection === 'asc' ? 'arrow_upward' : sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert' }}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoadingCards" class="loading-container d-flex flex-column align-items-center justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p class="mt-3 mb-0">Chargement des contenus...</p>
+    </div>
+
+    <div *ngIf="!isLoadingCards && mixedCards.length > 0" class="row m-3 cards-row">
+      <div *ngFor="let card of mixedCards" class="col-12 col-md-6 col-lg-4 mb-5">
+        <app-formation-card [formation]="card"></app-formation-card>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoadingCards && mixedCards.length === 0" class="card primary-card not-available p-3">
+      <p>Aucun contenu disponible actuellement</p>
+    </div>
+  </div>
+
+</div>

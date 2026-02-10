@@ -1,0 +1,216 @@
+@use "../../../../app/variables.scss";
+
+#problemes {
+  display: flex;
+}
+
+.container-fluid {
+  flex: 1;
+}
+.problem-container {
+  color: variables.$secondary-color!important;
+  flex-wrap: wrap;
+  margin: auto;
+  overflow: auto;
+  padding: 2em 5%;
+  max-height: 100%;
+  & > * {
+    margin: 4px !important;
+  }
+
+
+}
+.enigme-card, .solution-form-card {
+  max-width: 400px;
+  max-height: 600px;
+  & > * {
+    margin: 0 5%;
+  }
+}
+
+.enigme-card {
+  padding: 0;
+  & > .card-header {
+    border-color: variables.$secondary-color;
+    padding: 1em 0;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    & > div {
+      padding: 0;
+      & img {
+        max-height: 20px;
+        margin-left: 0.5em;
+      }
+    }
+  }
+
+  & > .consigne {
+    // max-width: 400px;
+    & > i {
+      font-size: 1em;
+    }
+    font-size: 1.2em;
+    margin-top: 1em;
+    text-align: justify;
+  }
+
+  & > .image-container {
+    // max-width: 400px;
+    margin: auto;
+    & > img {
+      max-width: 100%;
+    }
+  }
+}
+
+.solution-form-card {
+  padding: 1em 0;
+
+  & > .title-container {
+    margin-bottom: 1em;
+    & > .question {
+      font-size: 1.2em;
+      margin-right: 1em;
+    }
+  }
+
+  & > .card-help-container {
+    & > .btn {
+      color: variables.$secondary-color;
+      padding: 0.1875rem 0.375rem;
+      font-size: 1em;
+      width: 120px;
+      min-width: 96px;
+      height: 36px;
+      margin-right: 1em;
+      & > span {
+        text-wrap: nowrap;
+        & > small > img {
+          max-height: 14px;
+        }
+      }
+      &.disabled {
+        display: none;
+      }
+    }
+
+    & > .help-container {
+      border: 1px solid variables.$primary-color-l3;
+      border-radius: 4px;
+      margin: 0.5em 0;
+      & > .help-text {
+        padding: 0.5em;
+        &:not(:last-child) {
+          border-bottom: 1px solid variables.$primary-color-l3;
+        }
+      }
+    }
+  }
+
+  & > .card-content-container {
+    overflow: auto;
+    margin: 1em 0;
+
+    & > .form-container {
+      margin: 1em 5%;
+    }
+
+  }
+
+  & > .button-container {
+    margin-top: auto;
+    margin-bottom: 1em;
+    padding: 0;
+    & > button {
+      margin: 0 1em;
+      min-width: 96px;
+    }
+  }
+
+  & label.question-label {
+    font-size: 1.1em;
+    margin-top: 1em;
+    margin-bottom: 0.25em;
+  }
+}
+
+mat-form-field {
+  margin: 0.5em 0;
+}
+
+.form-input-row, .form-input-row-questions {
+  flex-wrap: wrap;
+  & > mat-form-field {
+    flex: 1;
+    margin: 0.5em;
+    max-width: 60%;
+  }
+}
+
+.form-input-row-questions {
+  &:not(:last-child) {
+    margin-bottom: 0.5em;
+  }
+}
+
+
+
+.response-error {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 1em;
+}
+.image-clickable {
+  cursor: zoom-in;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100001;
+}
+
+.image-lightbox~* {
+  z-index: auto !important;
+}
+
+.image-lightbox__img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  background: #a3a3a3;
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+
+  &.is-zoomed {
+    transform: scale(1.35);
+    cursor: zoom-out;
+  }
+}
+
+.image-lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}

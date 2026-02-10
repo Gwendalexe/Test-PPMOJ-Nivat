@@ -1,0 +1,15 @@
+export const REGION_MAPPING: Record<number, string> = {
+  96: 'Bretagne',
+  97: 'Pays de la Loire',
+  98: 'Corse',
+  99: 'Ile-de-France',
+  100: 'Hauts-de-France',
+  101: 'Nouvelle-Aquitaine',
+  102: 'Normandie',
+  103: 'Centre-Val de Loire',
+  104: 'Grand Est',
+  105: "Provence-Alpes-Côte d'Azur",
+  106: 'Bourgogne-Franche-Comté',
+  107: 'Occitanie',
+  108: 'Auvergne-Rhône-Alpes',
+};

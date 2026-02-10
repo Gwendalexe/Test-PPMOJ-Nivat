@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg version="1.2" baseProfile="tiny" width="210mm" height="297mm" viewBox="0 0 21000 29700" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+ <defs>
+  <font id="EmbeddedFont_1" horiz-adv-x="2048">
+   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1845" descent="437"/>
+   <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
+   <glyph unicode="x" horiz-adv-x="993" d="M 15,0 L 403,552 44,1062 269,1062 432,813 C 463,766 487,726 506,694 535,738 562,777 587,811 L 766,1062 981,1062 614,562 1009,0 788,0 570,330 512,419 233,0 Z"/>
+   <glyph unicode="c" horiz-adv-x="914" d="M 828,389 L 1005,366 C 986,244 936,149 857,80 777,11 679,-24 563,-24 418,-24 301,24 213,119 124,214 80,350 80,527 80,642 99,742 137,828 175,914 233,979 311,1022 388,1065 473,1086 564,1086 679,1086 774,1057 847,999 920,940 967,857 988,750 L 813,723 C 796,794 767,848 725,884 682,920 631,938 571,938 480,938 407,906 350,841 293,776 265,673 265,532 265,389 292,286 347,221 402,156 473,124 561,124 632,124 691,146 738,189 785,232 815,299 828,389 Z"/>
+   <glyph unicode="a" horiz-adv-x="993" d="M 828,131 C 761,74 697,34 636,11 574,-12 508,-24 437,-24 320,-24 231,5 168,62 105,119 74,191 74,280 74,332 86,380 110,423 133,466 164,500 203,526 241,552 284,572 332,585 367,594 421,603 492,612 637,629 744,650 813,674 814,699 814,714 814,721 814,794 797,846 763,876 717,917 649,937 558,937 473,937 411,922 371,893 330,863 300,810 281,735 L 105,759 C 121,834 147,895 184,942 221,988 274,1024 343,1049 412,1074 493,1086 584,1086 675,1086 748,1075 805,1054 862,1033 903,1006 930,974 957,941 975,900 986,851 992,820 995,765 995,685 L 995,445 C 995,278 999,172 1007,128 1014,83 1029,41 1052,0 L 864,0 C 845,37 833,81 828,131 Z M 813,533 C 748,506 650,484 519,465 445,454 393,442 362,429 331,416 308,396 291,371 274,345 266,316 266,285 266,237 284,197 321,165 357,133 410,117 480,117 549,117 611,132 665,163 719,193 759,234 784,287 803,328 813,388 813,467 Z"/>
+   <glyph unicode="A" horiz-adv-x="1350" d="M -3,0 L 560,1466 769,1466 1369,0 1148,0 977,444 364,444 203,0 Z M 420,602 L 917,602 764,1008 C 717,1131 683,1233 660,1312 641,1218 615,1125 581,1032 Z"/>
+  </font>
+ </defs>
+ <g visibility="visible" id="MasterSlide_1_Standard">
+  <desc>Master slide
+  </desc>
+  <rect fill="none" stroke="none" x="0" y="0" width="21000" height="29700"/>
+ </g>
+ <g visibility="visible" id="Slide_1_page1">
+  <g id="DrawingGroup_1">
+   <g>
+    <path fill="rgb(153,153,255)" stroke="none" d="M 10802,12432 L 3466,12432 3466,2651 18137,2651 18137,12432 10802,12432 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" id="Drawing_1_0" stroke-linejoin="round" d="M 10802,12432 L 3466,12432 3466,2651 18137,2651 18137,12432 10802,12432 Z"/>
+    <rect fill="none" stroke="none" x="3467" y="2652" width="14672" height="9782"/>
+   </g>
+   <g>
+    <path fill="rgb(204,255,153)" stroke="none" d="M 3466,12433 L 13248,2651 3466,2651 3466,12433 3466,12433 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" id="Drawing_2_0" stroke-linejoin="round" d="M 3466,12433 L 13248,2651 3466,2651 3466,12433 3466,12433 Z"/>
+    <rect fill="none" stroke="none" x="3466" y="2652" width="9783" height="9783"/>
+   </g>
+   <g>
+    <path fill="rgb(255,204,255)" stroke="none" d="M 18132,2651 L 8102,12433 18132,12433 18132,2651 18132,2651 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" id="Drawing_3_0" stroke-linejoin="round" d="M 18132,2651 L 8102,12433 18132,12433 18132,2651 18132,2651 Z"/>
+    <rect fill="none" stroke="none" x="8103" y="2652" width="10030" height="9782"/>
+   </g>
+   <g id="Drawing_4">
+    <rect fill="none" stroke="none" x="5423" y="5423" width="2264" height="1569"/>
+    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+     <text x="5673" y="6124">A</text>
+    </g>
+   </g>
+   <g id="Drawing_5">
+    <rect fill="none" stroke="none" x="10317" y="5423" width="2262" height="1569"/>
+    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+     <text x="10567" y="6124">A</text>
+    </g>
+   </g>
+   <g id="Drawing_6">
+    <rect fill="none" stroke="none" x="14964" y="5423" width="2264" height="1569"/>
+    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+     <text x="15214" y="6124">A</text>
+    </g>
+   </g>
+   <g>
+    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_7_0" stroke-linejoin="round" d="M 8847,11618 L 6157,9825"/>
+   </g>
+   <g>
+    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_8_0" stroke-linejoin="round" d="M 9336,11292 L 8765,10803"/>
+   </g>
+   <g>
+    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_9_0" stroke-linejoin="round" d="M 8439,11292 L 8928,10803"/>
+   </g>
+   <g>
+    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_10_0" stroke-linejoin="round" d="M 5423,10314 L 6157,10803"/>
+   </g>
+   <g>
+    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_11_0" stroke-linejoin="round" d="M 6727,10151 L 6157,10803"/>
+   </g>
+   <g id="Drawing_12">
+    <rect fill="none" stroke="none" x="6760" y="9072" width="2088" height="1569"/>
+    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+     <text x="7010" y="9773">a</text>
+    </g>
+   </g>
+  </g>
+  <g id="Drawing_13">
+   <path fill="none" stroke="rgb(255,102,0)" stroke-linejoin="round" d="M 2815,11983 L 2815,3102"/>
+   <path fill="rgb(255,102,0)" stroke="none" d="M 2815,12433 L 2965,11983 2665,11983 2815,12433 Z"/>
+   <path fill="rgb(255,102,0)" stroke="none" d="M 2815,2652 L 2665,3102 2965,3102 2815,2652 Z"/>
+   <g fill="rgb(255,102,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+    <g transform="translate(3036,7701) rotate(-90) translate(-3036,-7701)">
+     <text x="3036" y="7701">c</text>
+    </g>
+   </g>
+  </g>
+  <g id="Drawing_14">
+   <path fill="none" stroke="rgb(255,102,0)" stroke-linejoin="round" d="M 4080,13085 L 17688,13085"/>
+   <path fill="rgb(255,102,0)" stroke="none" d="M 3630,13085 L 4080,13235 4080,12935 3630,13085 Z"/>
+   <path fill="rgb(255,102,0)" stroke="none" d="M 18138,13085 L 17688,12935 17688,13235 18138,13085 Z"/>
+   <g fill="rgb(255,102,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="400">
+    <text x="10725" y="13305">x</text>
+   </g>
+  </g>
+  <g>
+   <path fill="none" stroke="rgb(153,0,255)" id="Drawing_15_0" stroke-linejoin="round" d="M 10558,13900 L 2000,13900 2000,2000 19116,2000 19116,13900 10558,13900 Z"/>
+  </g>
+ </g>
+</svg>

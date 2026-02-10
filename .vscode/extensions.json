@@ -1,0 +1,31 @@
+{
+	"recommendations": [
+		// back
+		"donjayamanne.python-extension-pack",
+		"ms-python.isort",
+		"ms-python.autopep8",
+		"mgesbert.python-path",
+		"frhtylcn.pythonsnippets",
+		"ms-python.flake8",
+		"cstrap.flask-snippets",
+		"cweijan.vscode-mysql-client2",
+		// front
+		"steoates.autoimport",
+		"dbaeumer.vscode-eslint",
+		"formulahendry.auto-complete-tag",
+		"yatki.vscode-surround",
+		"shardulm94.trailing-spaces",
+		"christian-kohler.npm-intellisense",
+		"christian-kohler.path-intellisense",
+		"esbenp.prettier-vscode",
+		// doc (markdown)
+		"DavidAnson.vscode-markdownlint",
+		"bierner.github-markdown-preview",
+		// others
+		"donjayamanne.git-extension-pack",
+		"vivaxy.vscode-conventional-commits",
+		"aaron-bond.better-comments",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"IronGeek.vscode-env"
+	],
+}

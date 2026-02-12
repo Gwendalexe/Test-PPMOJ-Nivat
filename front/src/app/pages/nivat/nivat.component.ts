@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { NivatService } from 'src/app/_services/nivat.service';
 
 // Components
-// CORRECTION ICI : Import direct du Component au lieu du Module
 import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 import { NivatGenerator } from './nivat-generator';
 import { NivatGridComponent } from './nivat-grid.component';
@@ -21,12 +20,7 @@ import { NivatGridComponent } from './nivat-grid.component';
   host: { class: 'dark-theme' },
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NavbarComponent, // CORRECTION ICI
-    NivatGridComponent,
-  ],
+  imports: [CommonModule, FormsModule, NavbarComponent, NivatGridComponent],
 })
 export class NivatComponent implements OnInit, OnDestroy {
   // --- Game State ---
@@ -36,6 +30,7 @@ export class NivatComponent implements OnInit, OnDestroy {
 
   hasStarted = false;
   hasBeenSolved = false;
+  isVictoryPopupOpen = false;
 
   // --- Metrics ---
   timer: any;
@@ -68,11 +63,15 @@ export class NivatComponent implements OnInit, OnDestroy {
      GAME INITIALIZATION & LOGIC
      ========================================================================== */
 
+  /**
+   * Initializes a brand new game with a new random grid.
+   */
   initGame(): void {
     this.stopTimer();
 
     this.hasStarted = false;
     this.hasBeenSolved = false;
+    this.isVictoryPopupOpen = false;
     this.timeElapsed = 0;
     this.displayTime = '00:00';
     this.currentMoveCount = 0;
@@ -85,27 +84,51 @@ export class NivatComponent implements OnInit, OnDestroy {
     this.originalGrid = JSON.parse(JSON.stringify(newGrid));
 
     this.gridId = `local-${Date.now()}`;
+
+    // Auto-start timer if user selects level
+    // this.startTimer();
   }
 
+  /**
+   * Resets the CURRENT grid to its initial state (Restart).
+   */
   resetCurrentGame(): void {
     this.stopTimer();
     this.hasStarted = false;
+    this.hasBeenSolved = false; // Unlock grid
+    this.isVictoryPopupOpen = false; // Close popup
 
     this.timeElapsed = 0;
     this.displayTime = '00:00';
     this.currentMoveCount = 0;
 
+    // Restore original grid copy
     this.grid = JSON.parse(JSON.stringify(this.originalGrid));
+  }
+
+  /**
+   * Called when user clicks on grid while it's locked (finished).
+   */
+  proposeRestart(): void {
+    if (confirm('La partie est terminée. Voulez-vous rejouer cette grille depuis le début ?')) {
+      this.resetCurrentGame();
+      this.startTimer(); // On relance le timer direct pour fluidité
+    }
   }
 
   /* ==========================================================================
      TIMER MANAGEMENT
      ========================================================================== */
 
+  /**
+   * Main Start/Reset button handler.
+   */
   toggleTimer(): void {
-    if (this.hasStarted) {
+    if (this.hasStarted || this.hasBeenSolved) {
+      // Si c'est en cours OU fini, le bouton agit comme un Reset
       this.resetCurrentGame();
     } else {
+      // Sinon c'est un Start
       this.startTimer();
     }
   }
@@ -120,6 +143,7 @@ export class NivatComponent implements OnInit, OnDestroy {
 
     this.hasStarted = true;
 
+    // Tick every second
     this.timer = setInterval(() => {
       this.timeElapsed++;
       this.displayTime = this.formatTime(this.timeElapsed);
@@ -152,31 +176,29 @@ export class NivatComponent implements OnInit, OnDestroy {
     this.currentMoveCount = moveCount;
   }
 
-  isSolved(moveCount: number): void {
+  isSolved(finalMoveCount: number): void {
+    // 1. Stop Everything
     this.stopTimer();
-    this.finalMoveCount = moveCount;
-    this.hasBeenSolved = true;
 
+    // 2. Save final state
+    this.finalMoveCount = finalMoveCount;
+    this.hasBeenSolved = true; // Locks the grid
+    this.isVictoryPopupOpen = true; // Shows popup
+
+    // 3. Send to Backend
     const currentLevel = parseInt(this.selectedLevel);
-
-    this.nivatService
-      .postSolvedNivat(
-        this.gridId,
-        this.timeElapsed,
-        this.finalMoveCount,
-        currentLevel
-      )
-      .subscribe({
-        next: response => {
-          if (response && (response.valid || response.reward)) {
-            this.handleSuccess(response.reward, response.mojettes);
-          }
-        },
-        error: err => {
-          console.error('[Error] Failed to validate score:', err);
-          this.handleSuccess(0, 0);
-        },
-      });
+    this.nivatService.postSolvedNivat(this.gridId, this.timeElapsed, this.finalMoveCount, currentLevel).subscribe({
+      next: response => {
+        if (response && (response.valid || response.reward)) {
+          this.handleSuccess(response.reward, response.mojettes);
+        }
+      },
+      error: err => {
+        console.error('[Error] Failed to validate score:', err);
+        // Even on error, we show the success screen locally
+        this.handleSuccess(0, 0);
+      },
+    });
   }
 
   handleSuccess(reward: number, totalMojettes: number): void {
@@ -186,11 +208,16 @@ export class NivatComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeVictoryPopup() {
+    this.isVictoryPopupOpen = false;
+  }
+
   /* ==========================================================================
      UI CONTROLS
      ========================================================================== */
 
   goToGridBrowse(): void {
+    // Generates a NEW grid (different puzzle)
     this.initGame();
   }
 
@@ -199,9 +226,13 @@ export class NivatComponent implements OnInit, OnDestroy {
   }
 
   selectLevel(level: string): void {
-    this.selectedLevel = level;
-    this.isMenuOpen = false;
-    this.initGame();
+    if (this.selectedLevel !== level) {
+      this.selectedLevel = level;
+      this.isMenuOpen = false;
+      this.initGame();
+    } else {
+      this.isMenuOpen = false;
+    }
   }
 
   getLevelLabel(): string {

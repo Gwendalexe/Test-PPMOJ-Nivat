@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'; // 1. OnChanges, SimpleChanges ajoutés
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import _ from 'lodash';
 
 // Models & Utils
@@ -15,17 +15,22 @@ import { rotateLeftInPlace, rotateRightInPlace } from 'src/utils/arrays';
   styleUrls: ['./nivat-grid.component.scss'],
 })
 export class NivatGridComponent implements OnChanges {
-  // 2. Implements OnChanges ajouté
   // --- Inputs / Outputs ---
 
   /** The current state of the game grid (matrix of -1, 0, 1) */
   @Input() grid: NivatGridValue[][] = [];
+
+  /** Si true, la grille est gelée (victoire) */
+  @Input() isLocked: boolean = false;
 
   /** Emits the total move count after every valid move */
   @Output() newMoveEvent = new EventEmitter<number>();
 
   /** Emits the final move count when the puzzle is solved */
   @Output() isSolvedEvent = new EventEmitter<number>();
+
+  /** Emits signal when user tries to play on a locked grid */
+  @Output() interactionWhenLocked = new EventEmitter<void>();
 
   // --- State ---
 
@@ -35,13 +40,17 @@ export class NivatGridComponent implements OnChanges {
   readonly MoveDirection = MoveDirection;
 
   /* ==========================================================================
-     LIFECYCLE HOOKS (LA CORRECTION EST ICI)
+     LIFECYCLE HOOKS
      ========================================================================== */
 
-  // 3. Cette méthode détecte quand le parent change la grille (changement de niveau)
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['grid']) {
-      this.reset(); // On remet le compteur à 0
+      // Si la grille change (nouvelle partie), on reset le compteur interne
+      // Attention : on ne reset PAS si c'est juste isLocked qui change
+      if (!changes['grid'].firstChange) {
+        // Optionnel: logique spécifique si besoin
+      }
+      this.moveCnt = 0;
     }
   }
 
@@ -59,10 +68,14 @@ export class NivatGridComponent implements OnChanges {
   /**
    * Handles row/column shifting logic.
    * Updates the grid state and checks for victory.
-   * * @param index - Index of the row or column to move
-   * @param direction - Direction of the shift (Up, Down, Left, Right)
    */
   move(index: number, direction: MoveDirection): void {
+    // 1. VÉRIFICATION DU VERROUILLAGE
+    if (this.isLocked) {
+      this.interactionWhenLocked.emit();
+      return; // On ne fait rien d'autre
+    }
+
     this.moveCnt++;
     this.newMoveEvent.emit(this.moveCnt);
 
@@ -124,13 +137,11 @@ export class NivatGridComponent implements OnChanges {
       this.isSolvedEvent.emit(this.moveCnt);
     }
   }
+
   /* ==========================================================================
      VIEW HELPERS (Rendering)
      ========================================================================== */
 
-  /**
-   * Returns the color code associated with the cell value.
-   */
   getCellColor(value: NivatGridValue): string {
     switch (value) {
       case -1:
@@ -149,18 +160,12 @@ export class NivatGridComponent implements OnChanges {
   }
 
   getColSum(colIndex: number): number {
-    // Sum vertical column by iterating rows
     return this.grid.reduce((sum, row) => sum + row[colIndex], 0);
   }
 
-  /**
-   * Generates CSS Grid Template string based on matrix size.
-   * Format: [HeaderCol] [GridCols...] [LeftButton] [RightButton]
-   */
   getGridTemplate(): string {
     if (!this.grid || this.grid.length === 0) return '';
     const nbCols = this.grid[0].length;
-    // 48px = cell size, 24px = button size
     return `48px repeat(${nbCols}, 48px) 24px 24px`;
   }
 

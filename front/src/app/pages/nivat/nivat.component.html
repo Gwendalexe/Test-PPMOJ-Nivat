@@ -1,41 +1,31 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="hasBeenSolved" class="container-fluid flex-column flex-grow-1 dialog-container no-scrollbar">
-  <div id="endDialog" class="card primary-card">
-    <h2 *ngIf="gridId" class="text-center">Félicitations !</h2>
-
-    <div *ngIf="gridId" class="d-flex flex-column text-center my-3">
-      <span>
-        Vous avez résolu la grille en <strong>{{ displayTime }}</strong> et <strong>{{ finalMoveCount }}</strong> coups
-        !
-      </span>
-      <span class="mt-2">
-        Vous avez remporté <b>{{ reward }}</b> mojettes !
-      </span>
-    </div>
-
-    <div class="btn-container d-flex justify-content-center">
-      <button (click)="router.navigate(['/'])" class="btn btn-secondary btn-sm">Retour à l'accueil</button>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="isHelpOpen" id="modal-backdrop" (click)="isHelpOpen = false"></div>
-
-<dialog id="helpDialog" class="d-flex modal card primary-modal" [ngClass]="{ open: isHelpOpen }">
-  <div class="dialog-content">
-    <h3>Comment jouer ?</h3>
-    <p>Le but est d'amener toutes les sommes (lignes et colonnes) à <strong>0</strong>.</p>
-    <p>Utilisez les flèches pour décaler les rangées.</p>
-  </div>
-
-  <span class="justify-content-end swipe-info align-center mt-auto">
-    Swipe up pour fermer <i class="bi bi-arrow-up-short"></i>
-  </span>
-</dialog>
-
-<div *ngIf="!hasBeenSolved" class="game-container container-fluid flex-column align-items-center flex-grow-1">
+<div class="game-container container-fluid flex-column align-items-center flex-grow-1">
   <div class="content-wrapper">
+    <div *ngIf="hasBeenSolved && isVictoryPopupOpen" class="victory-overlay" (click)="closeVictoryPopup()">
+      <div class="card primary-card victory-card" (click)="$event.stopPropagation()">
+        <button class="btn-close-popup" (click)="closeVictoryPopup()" aria-label="Fermer">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <h2 *ngIf="gridId" class="text-center">Félicitations !</h2>
+
+        <div *ngIf="gridId" class="d-flex flex-column text-center my-3">
+          <span>
+            Vous avez résolu la grille en <strong>{{ displayTime }}</strong> et
+            <strong>{{ finalMoveCount }}</strong> coups !
+          </span>
+          <span class="mt-2">
+            Vous avez remporté <b>{{ reward }}</b> mojettes !
+          </span>
+        </div>
+
+        <div class="btn-container d-flex justify-content-center">
+          <button (click)="router.navigate(['/'])" class="btn btn-secondary btn-sm">Retour à l'accueil</button>
+        </div>
+      </div>
+    </div>
+
     <div id="nivat-matrix-container" class="container card primary-card">
       <button class="btn btn-help" (click)="isHelpOpen = !isHelpOpen" aria-label="Règles du jeu">?</button>
 
@@ -49,7 +39,12 @@
         <span class="counter justify-self-end" style="font-weight: bold"> {{ currentMoveCount }} coups </span>
       </div>
 
-      <app-nivat-grid [grid]="grid" (newMoveEvent)="newMoveEventHandler($event)" (isSolvedEvent)="isSolved($event)">
+      <app-nivat-grid
+        [grid]="grid"
+        [isLocked]="hasBeenSolved"
+        (newMoveEvent)="newMoveEventHandler($event)"
+        (isSolvedEvent)="isSolved($event)"
+        (interactionWhenLocked)="proposeRestart()">
       </app-nivat-grid>
     </div>
 
@@ -75,3 +70,15 @@
     </div>
   </div>
 </div>
+<div *ngIf="isHelpOpen" id="modal-backdrop" (click)="isHelpOpen = false"></div>
+
+<dialog id="helpDialog" class="d-flex modal card primary-modal" [ngClass]="{ open: isHelpOpen }">
+  <div class="dialog-content">
+    <h3>Comment jouer ?</h3>
+    <p>Le but est d'amener toutes les sommes (lignes et colonnes) à <strong>0</strong>.</p>
+    <p>Utilisez les flèches pour décaler les rangées.</p>
+  </div>
+  <span class="justify-content-end swipe-info align-center mt-auto">
+    Swipe up pour fermer <i class="bi bi-arrow-up-short"></i>
+  </span>
+</dialog>

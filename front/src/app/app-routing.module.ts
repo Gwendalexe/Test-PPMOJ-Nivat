@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './_helpers/admin.guard';
 import { AuthGuard } from './_helpers/auth.guard';
 
-// Imports du Backoffice (Branche Sprint)
+// Imports du Backoffice
 import { BackofficeComponent } from './backoffice/backoffice/backoffice.component';
 import { FormationComponent as FormationComponentBackoffice } from './backoffice/formation/formation.component';
 import { FormationsComponent as FormationsComponentBackoffice } from './backoffice/formations/formations.component';
@@ -12,7 +12,7 @@ import { UsersComponent as UsersComponentBackoffice } from './backoffice/users/u
 import { WeekproblemComponent } from './backoffice/weekproblem/weekproblem.component';
 import { WeekproblemsComponent } from './backoffice/weekproblems/weekproblems.component';
 
-// Imports des Pages (Mixte)
+// Imports des Pages
 import { AccountComponent } from './pages/account/account.component';
 import { AccountConfirmationComponent } from './pages/account_confirmation/account_confirmation.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
@@ -23,7 +23,6 @@ import { FormationComponent } from './pages/formation/formation.component';
 import { FormationsComponent } from './pages/formations/formations.component';
 import { FormationsHomeComponent } from './pages/formations_home/formations_home.component';
 import { HistoireComponent } from './pages/histoire/histoire.component';
-import { HomeComponent } from './pages/home/home.component';
 import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
 import { LostPasswordComponent } from './pages/lost_password/lost_password.component';
 import { RedefineComponent } from './pages/lost_password/redefine/redefine.component';
@@ -38,9 +37,11 @@ import { WallOfFameComponent } from './pages/wall-of-fame/wall-of-fame.component
 import { WorkInProgressComponent } from './pages/work-in-progress/work-in-progress.component';
 
 const routes: Routes = [
+  // --- REDIRECTION DIRECTE VERS NIVAT (SANS HOME) ---
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'nivat',
+    pathMatch: 'full',
   },
 
   // --- JEUX ---
@@ -60,12 +61,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  // TA ROUTE NIVAT (Insérée ici)
+  // --- TON JEU NIVAT (SANS AUTH GUARD) ---
   {
     path: 'nivat',
-    loadComponent: () =>
-      import('./pages/nivat/nivat.component').then(m => m.NivatComponent),
-    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/nivat/nivat.component').then(m => m.NivatComponent),
+    // canActivate: [AuthGuard], // Désactivé pour le test
   },
 
   {
